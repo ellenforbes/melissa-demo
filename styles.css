@@ -331,7 +331,7 @@ h3 { font-size: 1.35rem; }
   .hero__sub { margin-left: auto; margin-right: auto; }
   .hero__cta { justify-content: center; }
   .hero__photo { transform: rotate(-1deg); }
-  .motif--splot-blue, .motif--splot-green { display: none; }
+  .hero__motifs { display: none; }
 }
 
 /* ---------- ABOUT ---------- */
