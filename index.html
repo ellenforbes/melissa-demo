@@ -1,1 +1,297 @@
-Hi, I'm Melissa and I create
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Melissa — Artist · Painter · Big-art Maker</title>
+  <meta name="description" content="Melissa is an artist who likes big art — paint, props, costumes. Faux finishes, signs, homes, teaching, and interactive events." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Reusable squiggle SVG (only inline SVG kept; everything else uses PNG motifs) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="squiggle" viewBox="0 0 200 14" preserveAspectRatio="none">
+        <path d="M2 8 Q 18 0 36 8 T 70 8 T 104 8 T 138 8 T 172 8 T 198 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__logo" aria-label="Melissa — home">
+      <span class="nav__name">Melissa</span>
+      <img class="nav__brush" src="Motifs/PaintbrushOne.png" alt="" />
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#faq">FAQ</a>
+      <a class="nav__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+        </svg>
+      </a>
+    </nav>
+    <button class="nav__menu-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="hero">
+    <div class="hero__motifs" aria-hidden="true">
+      <img class="motif--splat-rb"    src="Motifs/SplatOne.png"  alt="" />
+      <img class="motif--splot-blue"  src="Motifs/SplotOne.png"  alt="" />
+      <img class="motif--splot-green" src="Motifs/SplotTwo.png"  alt="" />
+    </div>
+
+    <div class="hero__inner">
+      <p class="hero__kicker">artist · painter · prop maker</p>
+      <h1 class="hero__title">
+        Hi, I'm <span class="hero__name">Melissa</span><br/>
+        and I like
+        <span class="hero__big">
+          big&nbsp;art
+          <svg class="hero__squiggle" aria-hidden="true"><use href="#squiggle"/></svg>
+        </span>
+      </h1>
+      <p class="hero__sub">Paint, props, costumes &amp; everything in between.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#portfolio">See my work</a>
+        <a class="btn btn--ghost" href="#faq">Get a quote</a>
+      </div>
+    </div>
+
+    <div class="hero__photo" aria-hidden="true">
+      <img src="Photos/ProfilePhoto.jpg" alt="" />
+      <span class="tape tape--tl"></span>
+      <span class="tape tape--br"></span>
+    </div>
+  </section>
+
+  <!-- pink drip dripping into next section -->
+  <img class="drip-divider" src="Motifs/HorizontalDripsOne.png" alt="" aria-hidden="true" />
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" class="about section">
+    <div class="section__head">
+      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+      <span class="eyebrow">01 · About</span>
+      <h2>Hey there <span class="wave">👋🏻</span></h2>
+    </div>
+    <div class="about__grid">
+      <div class="about__copy">
+        <p class="lead">
+          I'm Melissa — an artist who can't sit still. I paint walls, signs, props, costumes, and
+          anything else that needs a little more <em>oomph</em>.
+        </p>
+        <p>
+          Faux finishes that fool the eye. Hand-lettered signs. Murals that turn a kid's bedroom into
+          a portal. Costumes for the stage. If it can be painted, I'll probably try to paint it.
+        </p>
+        <p>
+          When I'm not painting, I'm teaching — both fine-art technique and the everyday handywoman
+          stuff most people never got shown. (You really <em>can</em> patch that hole yourself.)
+        </p>
+        <ul class="about__chips">
+          <li>Faux finishes</li>
+          <li>Murals</li>
+          <li>Hand-lettered signs</li>
+          <li>Props &amp; sets</li>
+          <li>Costumes</li>
+          <li>Teaching</li>
+        </ul>
+      </div>
+      <div class="about__media">
+        <img src="Photos/BackgroundPaintingPhoto.jpg" alt="Melissa at work on a large painting" />
+      </div>
+    </div>
+  </section>
+
+  <!-- teal drip flipped, dripping up out of services -->
+  <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsTwo.png" alt="" aria-hidden="true" />
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" class="services section">
+    <div class="section__head">
+      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+      <span class="eyebrow">02 · Services</span>
+      <h2>What I do</h2>
+    </div>
+    <div class="services__grid">
+      <article class="card card--painting">
+        <img class="card__corner-drip" src="Motifs/HorizontalDripsOne.png" alt="" aria-hidden="true" />
+        <img class="card__icon" src="Motifs/PaintbrushOne.png" alt="" aria-hidden="true" />
+        <h3>Painting</h3>
+        <p class="card__lead">Faux finishes, signs, homes — the works.</p>
+        <ul>
+          <li>Faux finishes &amp; decorative surfaces</li>
+          <li>Custom hand-lettered signs</li>
+          <li>Murals &amp; feature walls</li>
+          <li>Whole-home interior painting</li>
+          <li>Props, sets &amp; costumes</li>
+        </ul>
+      </article>
+
+      <article class="card card--teaching">
+        <img class="card__corner-drip" src="Motifs/HorizontalDripsThree.png" alt="" aria-hidden="true" />
+        <img class="card__icon" src="Motifs/SplotOne.png" alt="" aria-hidden="true" />
+        <h3>Teaching</h3>
+        <p class="card__lead">Art skills, plus the home stuff nobody taught you.</p>
+        <ul>
+          <li>Faux finish workshops</li>
+          <li>School visits — elementary &amp; high school</li>
+          <li>Handywoman 101: caulk a tub, patch a hole</li>
+          <li>Brush, color &amp; surface fundamentals</li>
+        </ul>
+      </article>
+
+      <article class="card card--events">
+        <img class="card__corner-drip" src="Motifs/HorizontalDripsFour.png" alt="" aria-hidden="true" />
+        <img class="card__icon" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+        <h3>Events</h3>
+        <p class="card__lead">Interactive art that gets a crowd painting.</p>
+        <ul>
+          <li>Giant paint-by-numbers (it's a hit!)</li>
+          <li>Weddings &amp; birthdays</li>
+          <li>Community &amp; charity events</li>
+          <li>Sport tournaments</li>
+          <li>Custom interactive installs</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- purple drip dripping into portfolio -->
+  <img class="drip-divider" src="Motifs/HorizontalDripsFive.png" alt="" aria-hidden="true" />
+
+  <!-- ============ PORTFOLIO ============ -->
+  <section id="portfolio" class="portfolio section">
+    <div class="section__head">
+      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+      <span class="eyebrow">03 · Portfolio</span>
+      <h2>Recent projects</h2>
+      <p class="section__sub">A peek at what's been on my easel and in my workshop.</p>
+    </div>
+    <div id="portfolio-list" class="portfolio__list">
+      <!-- Projects rendered here by script.js -->
+    </div>
+  </section>
+
+  <!-- orange drip flipped going up into FAQ -->
+  <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsFour.png" alt="" aria-hidden="true" />
+
+  <!-- ============ FAQ + INQUIRY ============ -->
+  <section id="faq" class="faq section">
+    <div class="section__head">
+      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+      <span class="eyebrow">04 · FAQ &amp; Inquiries</span>
+      <h2>Got questions?</h2>
+    </div>
+
+    <div class="faq__grid">
+      <div class="faq__list">
+        <details>
+          <summary>What types of projects do you take on?</summary>
+          <p>Faux finishes, murals, hand-lettered signs, full-home interiors, props,
+             costumes, and interactive event installs. If you're not sure — ask.</p>
+        </details>
+        <details>
+          <summary>How do I book you?</summary>
+          <p>Send me a note using the form on the right and pick the closest match
+             from the dropdown. I'll reply within a few days with next steps and a quote.</p>
+        </details>
+        <details>
+          <summary>Do you travel for jobs?</summary>
+          <p>Yes — local jobs are easiest, but I travel for the right project. Travel
+             outside my home area is added to the quote.</p>
+        </details>
+        <details>
+          <summary>How does pricing work?</summary>
+          <p>Every project is different, so I quote per job after we chat about scope,
+             surface, materials, and timeline. Workshops and events have set rates that
+             scale with group size.</p>
+        </details>
+        <details>
+          <summary>What about deposits and timelines?</summary>
+          <p>Most jobs need a deposit to lock in the date. Lead time varies by season —
+             the sooner you reach out, the better.</p>
+        </details>
+        <details>
+          <summary>Do you teach private workshops?</summary>
+          <p>Yes — for individuals, small groups, schools, and community programs.
+             Pick "Teaching" in the form and tell me what you'd like to learn.</p>
+        </details>
+      </div>
+
+      <form id="inquiry-form" class="inquiry" novalidate>
+        <h3>Send an inquiry</h3>
+        <p class="inquiry__intro">
+          Prefer email? <a href="mailto:hello@lovemelissa.xo">hello@lovemelissa.xo</a>
+        </p>
+        <label>
+          Your name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          What's this about?
+          <select name="topic" required>
+            <option value="">Choose one…</option>
+            <option value="painting">Painting</option>
+            <option value="teaching">Teaching</option>
+            <option value="events">Events</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+        <label>
+          Tell me about your project
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit" class="btn btn--primary">Send it 🎨</button>
+        <p class="inquiry__status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <a class="footer__logo" href="#top">
+        <img class="footer__brush" src="Motifs/PaintbrushOne.png" alt="" />
+        <span>Melissa</span>
+      </a>
+      <a class="footer__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+        </svg>
+        @love.melissa.xo
+      </a>
+    </div>
+    <p class="footer__copy">© <span id="year"></span> Melissa · Made with paint &amp; love</p>
+  </footer>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox__close" aria-label="Close">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Previous">‹</button>
+    <img class="lightbox__img" alt="" />
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Next">›</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
