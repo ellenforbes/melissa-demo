@@ -167,14 +167,28 @@ function renderPortfolio() {
       </div>`;
   }).join('');
 
+  const dots = PROJECTS.map((p, i) => `
+      <button type="button" class="stepper__dot${i === 0 ? ' is-active' : ''}"
+              data-index="${i}" aria-label="${p.title}"></button>`).join('');
+
   list.innerHTML = `
     <div class="subtabs" role="tablist" aria-label="Projects">${tabs}
+    </div>
+    <div class="stepper">
+      <div class="stepper__bar">
+        <button type="button" class="stepper__arrow" data-step="-1" aria-label="Previous project">&lsaquo;</button>
+        <span class="stepper__label" aria-live="polite">${PROJECTS[0].title}</span>
+        <button type="button" class="stepper__arrow" data-step="1" aria-label="Next project">&rsaquo;</button>
+      </div>
+      <div class="stepper__dots">${dots}
+      </div>
     </div>
     <div class="subpanels">${panels}
     </div>`;
 
   $$('.project__photo', list).forEach((el) => {
     el.addEventListener('click', () => {
+      if (swipedRecently()) return;
       const projectIdx = Number(el.dataset.project);
       const photoIdx = $$(`.project__photo[data-project="${projectIdx}"]`)
         .indexOf(el);
@@ -183,12 +197,23 @@ function renderPortfolio() {
   });
 
   bindSubtabs(list);
+  bindStepper(list);
+  bindSwipe(list);
 }
 
-/* ---------- Portfolio sub-tabs (one per project) ---------- */
+/* ---------- Portfolio project switching ----------
+   Two controls drive the same set of panels: a row of pills on desktop,
+   and a prev/next stepper with dots on mobile (plus swipe on the stage).
+   Only one of the two is ever visible, but both stay in sync.
+*/
 function currentProjectIndex() {
   const active = $('.subtab.is-active');
   return active ? Number(active.dataset.index) : 0;
+}
+
+function stepProject(delta, opts = {}) {
+  const next = (currentProjectIndex() + delta + PROJECTS.length) % PROJECTS.length;
+  activateProject(next, opts);
 }
 
 function activateProject(idx, opts = {}) {
@@ -203,6 +228,16 @@ function activateProject(idx, opts = {}) {
   $$('.subpanel').forEach((panel) => {
     panel.hidden = Number(panel.dataset.index) !== idx;
   });
+
+  const label = $('.stepper__label');
+  if (label) label.textContent = PROJECTS[idx].title;
+  $$('.stepper__dot').forEach((dot) => {
+    const on = Number(dot.dataset.index) === idx;
+    dot.classList.toggle('is-active', on);
+    if (on) dot.setAttribute('aria-current', 'true');
+    else dot.removeAttribute('aria-current');
+  });
+
   if (opts.focus) $(`#subtab-${idx}`).focus();
   if (opts.hash !== false) syncHash();
 }
@@ -220,9 +255,52 @@ function bindSubtabs(list) {
     const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
     if (!step) return;
     e.preventDefault();
-    const next = (currentProjectIndex() + step + PROJECTS.length) % PROJECTS.length;
-    activateProject(next, { focus: true });
+    stepProject(step, { focus: true });
   });
+}
+
+function bindStepper(list) {
+  const stepper = $('.stepper', list);
+  if (!stepper) return;
+
+  stepper.addEventListener('click', (e) => {
+    const arrow = e.target.closest('.stepper__arrow');
+    if (arrow) return stepProject(Number(arrow.dataset.step));
+    const dot = e.target.closest('.stepper__dot');
+    if (dot) activateProject(Number(dot.dataset.index));
+  });
+}
+
+/* ---------- Swipe the photo stage to change project ----------
+   A swipe also lands as a click on whatever photo was under the finger,
+   so a recent swipe suppresses the lightbox for a moment.
+*/
+let lastSwipeAt = 0;
+const swipedRecently = () => Date.now() - lastSwipeAt < 400;
+
+function bindSwipe(list) {
+  const stage = $('.subpanels', list);
+  if (!stage) return;
+  let startX = null;
+  let startY = null;
+
+  stage.addEventListener('touchstart', (e) => {
+    const t = e.changedTouches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+  }, { passive: true });
+
+  stage.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    startX = null;
+    /* Ignore short drags and anything that reads as a vertical scroll. */
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    lastSwipeAt = Date.now();
+    stepProject(dx < 0 ? 1 : -1);
+  }, { passive: true });
 }
 
 /* ---------- Section tabs (About / Services / Portfolio / FAQ) ----------
