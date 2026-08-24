@@ -123,11 +123,20 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 const enc = (s) => s.split('/').map(encodeURIComponent).join('/');
 
+const slugify = (s) =>
+  s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
 function renderPortfolio() {
   const list = $('#portfolio-list');
   if (!list) return;
 
-  list.innerHTML = PROJECTS.map((p, i) => {
+  const tabs = PROJECTS.map((p, i) => `
+      <button type="button" class="subtab${i === 0 ? ' is-active' : ''}"
+              id="subtab-${i}" role="tab" data-index="${i}"
+              aria-controls="subpanel-${i}" aria-selected="${i === 0}"
+              ${i === 0 ? '' : 'tabindex="-1"'}>${p.title}</button>`).join('');
+
+  const panels = PROJECTS.map((p, i) => {
     const positions = LAYOUTS[p.layout] || LAYOUTS.a;
     const photos = p.photos.map((file, j) => {
       const pos = positions[j] || positions[positions.length - 1];
@@ -142,19 +151,27 @@ function renderPortfolio() {
     }).join('');
 
     return `
-      <article class="project project--${p.layout}">
-        <div class="project__head">
-          <span class="project__num">No. ${String(i + 1).padStart(2, '0')}</span>
-          <h3 class="project__title">${p.title}</h3>
-          <span class="project__meta">${p.meta}</span>
-        </div>
-        <p class="project__blurb">${p.blurb}</p>
-        <div class="project__stage">
-          <img class="project__splat" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-          ${photos}
-        </div>
-      </article>`;
+      <div class="subpanel" id="subpanel-${i}" data-index="${i}" role="tabpanel"
+           aria-labelledby="subtab-${i}" tabindex="-1"${i === 0 ? '' : ' hidden'}>
+        <article class="project project--${p.layout}">
+          <div class="project__head">
+            <h3 class="project__title">${p.title}</h3>
+            <span class="project__meta">${p.meta}</span>
+          </div>
+          <p class="project__blurb">${p.blurb}</p>
+          <div class="project__stage">
+            <img class="project__splat" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
+            ${photos}
+          </div>
+        </article>
+      </div>`;
   }).join('');
+
+  list.innerHTML = `
+    <div class="subtabs" role="tablist" aria-label="Projects">${tabs}
+    </div>
+    <div class="subpanels">${panels}
+    </div>`;
 
   $$('.project__photo', list).forEach((el) => {
     el.addEventListener('click', () => {
@@ -164,6 +181,149 @@ function renderPortfolio() {
       openLightbox(projectIdx, photoIdx);
     });
   });
+
+  bindSubtabs(list);
+}
+
+/* ---------- Portfolio sub-tabs (one per project) ---------- */
+function currentProjectIndex() {
+  const active = $('.subtab.is-active');
+  return active ? Number(active.dataset.index) : 0;
+}
+
+function activateProject(idx, opts = {}) {
+  if (!PROJECTS[idx]) return;
+  $$('.subtab').forEach((btn) => {
+    const on = Number(btn.dataset.index) === idx;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-selected', String(on));
+    if (on) btn.removeAttribute('tabindex');
+    else btn.setAttribute('tabindex', '-1');
+  });
+  $$('.subpanel').forEach((panel) => {
+    panel.hidden = Number(panel.dataset.index) !== idx;
+  });
+  if (opts.focus) $(`#subtab-${idx}`).focus();
+  if (opts.hash !== false) syncHash();
+}
+
+function bindSubtabs(list) {
+  const bar = $('.subtabs', list);
+  if (!bar) return;
+
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.subtab');
+    if (btn) activateProject(Number(btn.dataset.index));
+  });
+
+  bar.addEventListener('keydown', (e) => {
+    const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
+    if (!step) return;
+    e.preventDefault();
+    const next = (currentProjectIndex() + step + PROJECTS.length) % PROJECTS.length;
+    activateProject(next, { focus: true });
+  });
+}
+
+/* ---------- Section tabs (About / Services / Portfolio / FAQ) ----------
+   The page is a tab set, not a long scroll. The URL hash still names the
+   view so links can be shared: #about, #services, #faq, and
+   #portfolio-<project-slug> for a specific project.
+*/
+const TAB_IDS = ['about', 'services', 'portfolio', 'faq'];
+
+function currentTab() {
+  const active = $('.tab.is-active');
+  return active ? active.dataset.tab : 'about';
+}
+
+function syncHash() {
+  const name = currentTab();
+  const hash = name === 'portfolio'
+    ? `#portfolio-${slugify(PROJECTS[currentProjectIndex()].title)}`
+    : `#${name}`;
+  history.replaceState(null, '', hash);
+}
+
+function activateTab(name, opts = {}) {
+  if (!TAB_IDS.includes(name)) return;
+
+  $$('.tab').forEach((btn) => {
+    const on = btn.dataset.tab === name;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-selected', String(on));
+    if (on) btn.removeAttribute('tabindex');
+    else btn.setAttribute('tabindex', '-1');
+  });
+  $$('.tab-panel').forEach((panel) => {
+    panel.hidden = panel.id !== `panel-${name}`;
+  });
+  $$('.nav__links a').forEach((a) => {
+    a.classList.toggle('is-current', a.getAttribute('href') === `#${name}`);
+  });
+
+  if (opts.focus) $(`#tab-${name}`).focus();
+  if (opts.scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (opts.hash !== false) syncHash();
+}
+
+/* Read the opening view out of the URL. Anything unrecognised lands on About. */
+function viewFromHash() {
+  const raw = location.hash.replace(/^#/, '');
+  if (TAB_IDS.includes(raw)) return { tab: raw, project: null };
+  if (raw.startsWith('portfolio-')) {
+    const slug = raw.slice('portfolio-'.length);
+    const idx = PROJECTS.findIndex((p) => slugify(p.title) === slug);
+    return { tab: 'portfolio', project: idx === -1 ? null : idx };
+  }
+  return { tab: 'about', project: null };
+}
+
+function bindTabs() {
+  const bar = $('.tabs__bar');
+  if (!bar) return;
+
+  /* Park the tab bar directly under the sticky nav, whatever height it is. */
+  const setNavHeight = () => {
+    const nav = $('.nav');
+    if (nav) document.documentElement.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
+  };
+  setNavHeight();
+  window.addEventListener('resize', setNavHeight);
+
+  bar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab');
+    if (btn) activateTab(btn.dataset.tab, { scroll: true });
+  });
+
+  bar.addEventListener('keydown', (e) => {
+    const step = { ArrowLeft: -1, ArrowRight: 1 }[e.key];
+    if (!step) return;
+    e.preventDefault();
+    const next = (TAB_IDS.indexOf(currentTab()) + step + TAB_IDS.length) % TAB_IDS.length;
+    activateTab(TAB_IDS[next], { focus: true });
+  });
+
+  /* Nav links, hero buttons and footer links switch tabs instead of scrolling. */
+  $$('a[href^="#"]').forEach((a) => {
+    const target = a.getAttribute('href').slice(1);
+    const name = target === 'top' ? 'about' : target;
+    if (!TAB_IDS.includes(name)) return;
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      activateTab(name, { scroll: true });
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    const view = viewFromHash();
+    activateTab(view.tab, { hash: false });
+    if (view.project !== null) activateProject(view.project, { hash: false });
+  });
+
+  const view = viewFromHash();
+  if (view.project !== null) activateProject(view.project, { hash: false });
+  activateTab(view.tab, { hash: false });
 }
 
 /* ---------- Lightbox ---------- */
@@ -280,6 +440,7 @@ function setYear() {
 /* ---------- Boot ---------- */
 document.addEventListener('DOMContentLoaded', () => {
   renderPortfolio();
+  bindTabs();
   bindLightbox();
   bindNav();
   bindForm();

@@ -45,6 +45,19 @@
     </button>
   </header>
 
+  <!-- ============ TABS ============ -->
+  <div class="tabs" id="tabs">
+    <div class="tabs__bar" role="tablist" aria-label="Site sections">
+      <button type="button" class="tab is-active" id="tab-about" role="tab" data-tab="about" aria-controls="panel-about" aria-selected="true">About</button>
+      <button type="button" class="tab" id="tab-services" role="tab" data-tab="services" aria-controls="panel-services" aria-selected="false" tabindex="-1">Services</button>
+      <button type="button" class="tab" id="tab-portfolio" role="tab" data-tab="portfolio" aria-controls="panel-portfolio" aria-selected="false" tabindex="-1">Portfolio</button>
+      <button type="button" class="tab" id="tab-faq" role="tab" data-tab="faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1">FAQ</button>
+    </div>
+  </div>
+
+  <div class="tabs__panels">
+  <div class="tab-panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="-1">
+
   <!-- ============ HERO ============ -->
   <section id="top" class="hero">
     <div class="hero__motifs" aria-hidden="true">
@@ -84,7 +97,7 @@
   <section id="about" class="about section">
     <div class="section__head">
       <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">01 · About</span>
+      <span class="eyebrow">About</span>
       <h2>Hey there <span class="wave">👋🏻</span></h2>
     </div>
     <div class="about__grid">
@@ -118,12 +131,15 @@
 
   <!-- teal drip flipped, dripping up out of services -->
   <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsTwo.png" alt="" aria-hidden="true" />
+  </div>
+
+  <div class="tab-panel" id="panel-services" role="tabpanel" aria-labelledby="tab-services" tabindex="-1" hidden>
 
   <!-- ============ SERVICES ============ -->
   <section id="services" class="services section">
     <div class="section__head">
       <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">02 · Services</span>
+      <span class="eyebrow">Services</span>
       <h2>What I do</h2>
     </div>
     <div class="services__grid">
@@ -172,12 +188,15 @@
 
   <!-- purple drip dripping into portfolio -->
   <img class="drip-divider" src="Motifs/HorizontalDripsFive.png" alt="" aria-hidden="true" />
+  </div>
+
+  <div class="tab-panel" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" tabindex="-1" hidden>
 
   <!-- ============ PORTFOLIO ============ -->
   <section id="portfolio" class="portfolio section">
     <div class="section__head">
       <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">03 · Portfolio</span>
+      <span class="eyebrow">Portfolio</span>
       <h2>Recent projects</h2>
       <p class="section__sub">A peek at what's been on my easel and in my workshop.</p>
     </div>
@@ -188,12 +207,15 @@
 
   <!-- orange drip flipped going up into FAQ -->
   <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsFour.png" alt="" aria-hidden="true" />
+  </div>
+
+  <div class="tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" tabindex="-1" hidden>
 
   <!-- ============ FAQ + INQUIRY ============ -->
   <section id="faq" class="faq section">
     <div class="section__head">
       <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">04 · FAQ &amp; Inquiries</span>
+      <span class="eyebrow">FAQ &amp; Inquiries</span>
       <h2>Got questions?</h2>
     </div>
 
@@ -264,6 +286,8 @@
       </form>
     </div>
   </section>
+  </div>
+  </div>
 
   <!-- ============ FOOTER ============ -->
   <footer class="footer">

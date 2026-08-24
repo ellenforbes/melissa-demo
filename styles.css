@@ -459,13 +459,6 @@ h3 { font-size: 1.35rem; }
   margin-bottom: 12px;
   flex-wrap: wrap;
 }
-.project__num {
-  font-family: 'Caveat', cursive;
-  font-size: 2.2rem;
-  color: var(--purple);
-  font-weight: 700;
-  transform: rotate(-3deg);
-}
 .project__title { margin: 0; font-size: 2rem; }
 .project__meta {
   color: var(--ink-soft);
@@ -738,4 +731,102 @@ h3 { font-size: 1.35rem; }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- TABS ----------
+   The site is a tab set rather than one long scroll: the four section
+   panels swap in place under a sticky bar that sits below the nav.
+   --nav-h is measured and set by script.js so the bar parks flush.
+*/
+[hidden] { display: none !important; }
+
+.tabs {
+  position: sticky;
+  top: var(--nav-h, 64px);
+  z-index: 40;
+  padding: 12px clamp(16px, 4vw, 40px);
+  background: rgba(255, 246, 229, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--ink);
+}
+
+.tabs__bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.5vw, 16px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tab {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  padding: 10px 24px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+}
+.tab:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.tab:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.tab.is-active {
+  background: var(--pink);
+  color: white;
+  transform: rotate(-1.5deg);
+  box-shadow: var(--shadow-sm);
+}
+.tab.is-active:hover { transform: rotate(-1.5deg) translateY(-2px); }
+
+/* Nav link matching the open tab keeps its underline on */
+.nav__links a.is-current { color: var(--pink); }
+.nav__links a.is-current:not(.nav__insta)::after { transform: scaleX(1); }
+
+/* ---------- PORTFOLIO SUB-TABS (one per project) ---------- */
+.portfolio__list { gap: clamp(28px, 4vw, 44px); }
+
+.subtabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.subtab {
+  font-family: 'Caveat', cursive;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  padding: 6px 18px;
+  border: 2.5px solid var(--ink);
+  border-radius: 999px;
+  background: white;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.subtab:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.subtab:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.subtab.is-active {
+  background: var(--yellow);
+  transform: rotate(-2deg);
+  box-shadow: var(--shadow-sm);
+}
+.subtab.is-active:hover { transform: rotate(-2deg) translateY(-2px); }
+
+.subpanel:focus { outline: none; }
+
+@media (max-width: 720px) {
+  .tabs { padding: 10px 12px; }
+  .tab { padding: 8px 16px; }
+  .subtabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .subtab { flex: 0 0 auto; }
 }
