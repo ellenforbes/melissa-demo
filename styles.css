@@ -735,35 +735,22 @@ h3 { font-size: 1.35rem; }
 
 /* ---------- TABS ----------
    The site is a tab set rather than one long scroll: the four section
-   panels swap in place under a sticky bar that sits below the nav.
-   --nav-h is measured and set by script.js so the bar parks flush.
+   panels swap in place. The tabs live in the nav itself, so there is
+   only ever one row of them, and they fold into the burger on mobile.
 */
 [hidden] { display: none !important; }
 
-.tabs {
-  position: sticky;
-  top: var(--nav-h, 64px);
-  z-index: 40;
-  padding: 12px clamp(16px, 4vw, 40px);
-  background: rgba(255, 246, 229, 0.94);
-  backdrop-filter: blur(8px);
-  border-bottom: 2px solid var(--ink);
-}
-
-.tabs__bar {
+.nav__tabs {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: clamp(8px, 1.5vw, 16px);
-  max-width: 1200px;
-  margin: 0 auto;
+  align-items: center;
+  gap: clamp(6px, 1vw, 12px);
 }
 
-.tab {
+.nav__links a.tab {
   font-family: 'Inter', system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
-  padding: 10px 24px;
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  padding: 8px 20px;
   border: 2.5px solid var(--ink);
   border-radius: 999px;
   background: var(--cream);
@@ -771,20 +758,25 @@ h3 { font-size: 1.35rem; }
   cursor: pointer;
   transition: transform 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
 }
-.tab:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-.tab:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
-.tab.is-active {
+/* Pills carry their own active state, so the sliding underline is off here */
+.nav__links a.tab::after { display: none; }
+.nav__links a.tab:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav__links a.tab:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.nav__links a.tab.is-active {
   background: var(--pink);
   color: white;
   transform: rotate(-1.5deg);
   box-shadow: var(--shadow-sm);
 }
-.tab.is-active:hover { transform: rotate(-1.5deg) translateY(-2px); }
-
-/* Nav link matching the open tab keeps its underline on */
-.nav__links a.is-current { color: var(--pink); }
-.nav__links a.is-current:not(.nav__insta)::after { transform: scaleX(1); }
-
+.nav__links a.tab.is-active:hover {
+  transform: rotate(-1.5deg) translateY(-2px);
+  color: white;
+}
 /* ---------- PORTFOLIO SUB-TABS (one per project) ---------- */
 .portfolio__list { gap: clamp(28px, 4vw, 44px); }
 
@@ -819,8 +811,21 @@ h3 { font-size: 1.35rem; }
 .subpanel:focus { outline: none; }
 
 @media (max-width: 720px) {
-  .tabs { padding: 10px 12px; }
-  .tab { padding: 8px 16px; }
+  /* Burger menu: tabs stack as full-width pills instead of a row */
+  .nav__tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px 24px;
+    width: 100%;
+  }
+  .nav__links a.tab {
+    width: 100%;
+    text-align: center;
+    padding: 12px 16px;
+  }
+  .nav__links a.tab.is-active,
+  .nav__links a.tab.is-active:hover { transform: none; }
   .subtabs {
     flex-wrap: nowrap;
     overflow-x: auto;

@@ -258,9 +258,7 @@ function activateTab(name, opts = {}) {
   $$('.tab-panel').forEach((panel) => {
     panel.hidden = panel.id !== `panel-${name}`;
   });
-  $$('.nav__links a').forEach((a) => {
-    a.classList.toggle('is-current', a.getAttribute('href') === `#${name}`);
-  });
+  closeNav();
 
   if (opts.focus) $(`#tab-${name}`).focus();
   if (opts.scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -280,20 +278,14 @@ function viewFromHash() {
 }
 
 function bindTabs() {
-  const bar = $('.tabs__bar');
+  const bar = $('.nav__tabs');
   if (!bar) return;
-
-  /* Park the tab bar directly under the sticky nav, whatever height it is. */
-  const setNavHeight = () => {
-    const nav = $('.nav');
-    if (nav) document.documentElement.style.setProperty('--nav-h', `${nav.offsetHeight}px`);
-  };
-  setNavHeight();
-  window.addEventListener('resize', setNavHeight);
 
   bar.addEventListener('click', (e) => {
     const btn = e.target.closest('.tab');
-    if (btn) activateTab(btn.dataset.tab, { scroll: true });
+    if (!btn) return;
+    e.preventDefault();
+    activateTab(btn.dataset.tab, { scroll: true });
   });
 
   bar.addEventListener('keydown', (e) => {
@@ -304,8 +296,9 @@ function bindTabs() {
     activateTab(TAB_IDS[next], { focus: true });
   });
 
-  /* Nav links, hero buttons and footer links switch tabs instead of scrolling. */
+  /* Hero buttons and footer links switch tabs instead of scrolling. */
   $$('a[href^="#"]').forEach((a) => {
+    if (a.closest('.nav__tabs')) return;
     const target = a.getAttribute('href').slice(1);
     const name = target === 'top' ? 'about' : target;
     if (!TAB_IDS.includes(name)) return;
@@ -374,6 +367,14 @@ function bindLightbox() {
 }
 
 /* ---------- Mobile nav ---------- */
+function closeNav() {
+  const btn = $('.nav__menu-btn');
+  const links = $('.nav__links');
+  if (!btn || !links) return;
+  links.classList.remove('is-open');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
 function bindNav() {
   const btn = $('.nav__menu-btn');
   const links = $('.nav__links');
