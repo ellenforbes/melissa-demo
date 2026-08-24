@@ -492,6 +492,9 @@ h3 { font-size: 1.35rem; }
 .project--b .project__stage { aspect-ratio: 16 / 9; }
 
 .project__photo {
+  /* <figure> carries a UA default of margin: 1em 40px, which shifted the
+     whole spread 40px right and 16px down out of its stage. */
+  margin: 0;
   position: absolute;
   top: var(--t, 0%);
   left: var(--l, 0%);
