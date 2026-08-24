@@ -545,6 +545,7 @@ h3 { font-size: 1.35rem; }
 }
 .project--a .project__splat { top: -40px; right: -30px; transform: rotate(15deg); }
 .project--b .project__splat { bottom: -50px; left: -40px; transform: rotate(-12deg); }
+.project--c .project__splat { top: -35px; left: -35px; transform: rotate(-20deg); }
 
 @media (max-width: 720px) {
   .project__stage { aspect-ratio: 4 / 5; }

@@ -13,6 +13,7 @@
    To add a new project: push another object onto this array.
    - layout: 'a' (3-photo: feature + 2 angled siblings)
              'b' (5-photo: feature + 4 angled siblings)
+             'c' (4-photo: wide feature + 3 angled siblings)
    - photos: list of image filenames inside `folder`.
              The FIRST photo is always the big feature.
    ------------------------------------------------------- */
@@ -43,6 +44,47 @@ const PROJECTS = [
       'PXL_20260404_172039672.MP~2.jpg',
     ],
   },
+  {
+    title: 'Christmas Village Set',
+    meta: 'Stage flats · 2025',
+    blurb: 'A French Christmas village built flat by flat, from the Hotel de Noel to the toy shop window.',
+    layout: 'b',
+    folder: 'Project 20251205 Christmas Set Design',
+    photos: [
+      'PXL_20251205_162446419.MP~2.jpg',
+      'PXL_20251205_165424775.MP~3.jpg',
+      'PXL_20251205_165521572.MP~2.jpg',
+      'PXL_20251205_165909930.MP~2.jpg',
+      'PXL_20251205_165738035.MP~2.jpg',
+    ],
+  },
+  {
+    title: 'Paint by Numbers Mural',
+    meta: 'Large-scale canvas · 2025',
+    blurb: 'A hand-drawn, hand-numbered canvas, painted section by section from blank outline to finished glasshouse.',
+    layout: 'b',
+    folder: 'Project 20250927 Paint By Numbers',
+    photos: [
+      '20250927_235943.jpg',
+      '20250927_121514.jpg',
+      '20250927_191536~2.jpg',
+      '20250927_213638.jpg',
+      '20250927_224850.jpg',
+    ],
+  },
+  {
+    title: 'Winter Town Set',
+    meta: 'Stage flats · 2023',
+    blurb: 'A snowbound town in cut-out flats: the station, the fire hall, the chapel and the schoolhouse.',
+    layout: 'c',
+    folder: 'Project 20231206 Set Design',
+    photos: [
+      '20231219_190045~2.jpg',
+      'IMG_20231206_182918_086~2.jpg',
+      'IMG_20231220_073208_289~3.jpg',
+      'IMG_20231205_224845_930~3.jpg',
+    ],
+  },
 ];
 
 /* -------------------------------------------------------
@@ -65,6 +107,12 @@ const LAYOUTS = {
     { t: 8,  l: 70, w: 28, h: 44, r: -9,  z: 3 },
     { t: 50, l: 44, w: 30, h: 50, r: -6,  z: 2 },
     { t: 48, l: 70, w: 28, h: 48, r: 9,   z: 3 },
+  ],
+  c: [
+    { t: 6,  l: 3,  w: 50, h: 62, r: -4, z: 4 },
+    { t: 2,  l: 55, w: 30, h: 52, r: 6,  z: 3 },
+    { t: 46, l: 30, w: 28, h: 50, r: -8, z: 2 },
+    { t: 40, l: 62, w: 32, h: 56, r: 7,  z: 1 },
   ],
 };
 
