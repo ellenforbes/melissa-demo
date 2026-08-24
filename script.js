@@ -1,5 +1,5 @@
 /* =====================================================
-   Melissa — site script
+   Melissa site script
    - Renders portfolio from a data array (easy to extend)
    - Chaotic overlapping photo layout via per-layout presets
    - Mobile nav toggle
@@ -146,7 +146,7 @@ function renderPortfolio() {
         `--r:${pos.r}deg;--z:${pos.z};--ar:auto;`;
       return `
         <figure class="project__photo" data-src="${src}" data-project="${i}" style="${style}">
-          <img src="${src}" alt="${p.title} — photo ${j + 1}" loading="lazy" />
+          <img src="${src}" alt="${p.title}, photo ${j + 1}" loading="lazy" />
         </figure>`;
     }).join('');
 
@@ -346,7 +346,7 @@ const lightbox = {
     const proj = PROJECTS[this.project];
     const file = proj.photos[this.photo];
     this.img.src = enc(`${proj.folder}/${file}`);
-    this.img.alt = `${proj.title} — photo ${this.photo + 1} of ${proj.photos.length}`;
+    this.img.alt = `${proj.title}, photo ${this.photo + 1} of ${proj.photos.length}`;
   },
 };
 
@@ -392,7 +392,7 @@ function bindNav() {
 }
 
 /* ---------- Inquiry form ----------
-   No backend yet — we hand the message off to the user's mail
+   No backend yet, so we hand the message off to the user's mail
    client via a mailto: link, prefilled with the form contents.
    Swap this for a fetch() to a form service (Formspree, Netlify,
    etc.) when ready.
@@ -414,13 +414,13 @@ function bindForm() {
       return;
     }
 
-    const subject = `New ${data.topic} inquiry — ${data.name}`;
+    const subject = `New ${data.topic} inquiry from ${data.name}`;
     const body =
 `Hi Melissa,
 
 ${data.message}
 
-— ${data.name}
+- ${data.name}
 ${data.email}
 Topic: ${data.topic}`;
 

@@ -1,5 +1,5 @@
 /* =====================================================
-   Melissa — site styles
+   Melissa site styles
    Vivid, saturated palette pulled from the paint-drip motifs
    on a warm cream base so the work pops.
    ===================================================== */
@@ -481,7 +481,7 @@ h3 { font-size: 1.35rem; }
   font-size: 1.05rem;
 }
 
-/* Chaotic overlapping stage — photos use absolute positioning,
+/* Chaotic overlapping stage: photos use absolute positioning,
    each with rotation + position from inline custom properties */
 .project__stage {
   position: relative;
