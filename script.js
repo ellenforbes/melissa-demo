@@ -19,6 +19,20 @@
    ------------------------------------------------------- */
 const PROJECTS = [
   {
+    title: 'Paint by Numbers Mural',
+    meta: 'Large-scale canvas · 2025',
+    blurb: 'A hand-drawn, hand-numbered canvas, painted section by section from blank outline to finished glasshouse.',
+    layout: 'b',
+    folder: 'Project 20250927 Paint By Numbers',
+    photos: [
+      '20250927_235943.jpg',
+      '20250927_121514.jpg',
+      '20250927_191536~2.jpg',
+      '20250927_213638.jpg',
+      '20250927_224850.jpg',
+    ],
+  },
+  {
     title: 'Fancy Painting',
     meta: 'Decorative interior · 2026',
     blurb: 'Hand-painted detail work that turns a room into a statement.',
@@ -56,20 +70,6 @@ const PROJECTS = [
       'PXL_20251205_165521572.MP~2.jpg',
       'PXL_20251205_165909930.MP~2.jpg',
       'PXL_20251205_165738035.MP~2.jpg',
-    ],
-  },
-  {
-    title: 'Paint by Numbers Mural',
-    meta: 'Large-scale canvas · 2025',
-    blurb: 'A hand-drawn, hand-numbered canvas, painted section by section from blank outline to finished glasshouse.',
-    layout: 'b',
-    folder: 'Project 20250927 Paint By Numbers',
-    photos: [
-      '20250927_235943.jpg',
-      '20250927_121514.jpg',
-      '20250927_191536~2.jpg',
-      '20250927_213638.jpg',
-      '20250927_224850.jpg',
     ],
   },
   {

@@ -33,6 +33,12 @@ body {
   background: var(--cream);
   line-height: 1.6;
   overflow-x: hidden;
+  /* Sticky footer: the page is always at least a screen tall, and the
+     panel area soaks up any slack so the footer never floats mid-screen. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
 
 img { max-width: 100%; display: block; }
@@ -838,3 +844,18 @@ h3 { font-size: 1.35rem; }
   }
   .subtab { flex: 0 0 auto; }
 }
+
+/* ---------- STICKY FOOTER ----------
+   The panel area grows to fill whatever height the tab content does not
+   use, so the footer always sits on the bottom edge of the screen. When a
+   panel is shorter than the viewport its content is centred in the slack
+   rather than hugging the nav.
+*/
+.tabs__panels {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer { flex-shrink: 0; }
