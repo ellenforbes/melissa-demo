@@ -6,39 +6,39 @@
    ===================================================================== */
 
 :root {
-  /* paper + panels */
-  --cream:    #F7F0DC;
-  --cream-2:  #EFE4C6;
-  --sage:     #C8D18E;
-  --sage-2:   #BCC77E;
+  /* paper + panels, sampled from the banner artwork */
+  --cream:    #F1DBB2;
+  --cream-2:  #E9D3A4;
+  --sage:     #D4C896;
+  --sage-2:   #C8BB85;
 
   /* ink */
-  --plum:     #5A1338;
-  --plum-2:   #430E2A;
-  --ink:      #4B3A22;
-  --ink-soft: rgba(75, 58, 34, .22);
-  --body:     #3B2A1B;
+  --plum:     #501530;
+  --plum-2:   #3A0E22;
+  --ink:      #4A3D1E;
+  --ink-soft: rgba(74, 61, 30, .26);
+  --body:     #3E3416;
 
   /* blooms */
-  --pink:     #D6246F;
-  --berry:    #B31A5E;
-  --orange:   #E8792B;
-  --lime:     #A9BE3B;
-  --blue:     #3E7FA6;
-  --leaf:     #6C8C3C;
+  --pink:     #B32251;
+  --berry:    #8A1739;
+  --orange:   #E67B22;
+  --lime:     #B0A622;
+  --blue:     #316378;
+  --leaf:     #5E6B43;
 
   --display:  'Bagel Fat One', 'Cooper Black', 'Arial Rounded MT Bold', system-ui, sans-serif;
   --text:     'Lora', Georgia, 'Times New Roman', serif;
   --script:   'Caveat', 'Segoe Script', cursive;
 
   --radius:   22px;
-  --shadow:   0 6px 0 rgba(75, 58, 34, .16);
+  --shadow:   0 6px 0 rgba(74, 61, 30, .2);
 
   /* the little flower that separates menu items */
-  --sep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23E8792B'%3E%3Ccircle cx='50' cy='26' r='19'/%3E%3Ccircle cx='73' cy='43' r='19'/%3E%3Ccircle cx='64' cy='71' r='19'/%3E%3Ccircle cx='36' cy='71' r='19'/%3E%3Ccircle cx='27' cy='43' r='19'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='12' fill='%23F7F0DC'/%3E%3C/svg%3E");
+  --sep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23E67B22'%3E%3Ccircle cx='50' cy='26' r='19'/%3E%3Ccircle cx='73' cy='43' r='19'/%3E%3Ccircle cx='64' cy='71' r='19'/%3E%3Ccircle cx='36' cy='71' r='19'/%3E%3Ccircle cx='27' cy='43' r='19'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='12' fill='%23F1DBB2'/%3E%3C/svg%3E");
 
   /* the wavy stem either side of the heart divider */
-  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20' preserveAspectRatio='none'%3E%3Cpath d='M2 10C20 1 40 19 60 10S100 1 118 10' fill='none' stroke='%236C8C3C' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20' preserveAspectRatio='none'%3E%3Cpath d='M2 10C20 1 40 19 60 10S100 1 118 10' fill='none' stroke='%235E6B43' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -67,6 +67,18 @@ a { color: var(--pink); }
 
 .flower-defs { position: absolute; }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------------------------------------------------------------------
    MASTHEAD
    --------------------------------------------------------------------- */
@@ -77,63 +89,86 @@ a { color: var(--pink); }
   overflow: hidden;
 }
 
-/* --- the flower banner -----------------------------------------------
-   Blooms are placed by percentage inside a fixed-ratio band, so the
-   whole arrangement scales as one picture instead of reflowing. */
-.banner {
-  position: relative;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  aspect-ratio: 1280 / 330;
+/* --- the garland ------------------------------------------------------
+   A centred flex row of Melissa's painted blooms, cut out of her banner
+   art. It is always wider than the viewport and clipped, so the flowers
+   run edge to edge at any width without stretching or tiling seams.
+   The middle five are the arrangement she drew, so that is what a phone
+   shows; wider screens simply reveal more of the row. */
+.garland {
+  margin-top: clamp(-46px, -3.2vw, -12px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  margin-bottom: -1.5%;
 }
 
-.bloom,
-.bg-leaf {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: var(--w);
+.garland img {
+  flex: none;
+  /* also capped against viewport height so the poster shrinks to fit a
+     short window instead of pushing the nav below the fold */
+  width: min(clamp(106px, 21vw, 204px), 21vh);
   height: auto;
-  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
-  overflow: visible;
+  margin-inline: -17px;
 }
 
-.bg-leaf { --petal: #6C8C3C; opacity: .92; }
+/* a little rise and fall so the row does not read as a flat line */
+.garland img:nth-child(2n)  { margin-top: 1.4%; }
+.garland img:nth-child(3n)  { margin-top: 2.8%; }
+.garland img:nth-child(5n)  { margin-top: .6%; }
+.garland img:nth-child(4n)  { transform: scaleX(-1); }
 
-/* --- wordmark --------------------------------------------------------- */
-.wordmark {
-  display: block;
-  text-decoration: none;
-  font-family: var(--display);
-  font-weight: 400;
-  line-height: .92;
-  margin-top: calc(-1 * clamp(.4rem, 2.2vw, 2.2rem));
+/* --- wordmark and the two blooms that flank it ------------------------ */
+.masthead__mid {
+  position: relative;
+  width: min(100%, 1060px);
+  margin: 0 auto;
+}
+
+.masthead__mark {
   position: relative;
   z-index: 2;
+  display: block;
+  width: min(clamp(190px, 62%, 520px), 48vh);
+  margin: 0 auto;
 }
 
-.wordmark__love,
-.wordmark__name { display: block; }
+.masthead__mark img { display: block; width: 100%; height: auto; }
 
-.wordmark__love {
-  color: var(--plum);
-  font-size: clamp(2.9rem, 11vw, 6.6rem);
-  letter-spacing: .01em;
+.masthead__side {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: min(clamp(88px, 13vw, 208px), 22vh);
+  height: auto;
+  transform: translateY(-50%);
 }
 
-.wordmark__name {
-  color: var(--pink);
-  font-size: clamp(2.5rem, 9.6vw, 5.8rem);
-  margin-top: -.06em;
+.masthead__side--l { left: 1%; }
+.masthead__side--r { right: 1%; }
+
+/* foliage tucked between the side blooms and the lettering */
+.masthead__leaf {
+  position: absolute;
+  bottom: -4%;
+  z-index: 0;
+  width: clamp(54px, 7vw, 108px);
+  height: auto;
 }
 
-.wordmark__xo {
-  color: var(--orange);
-  font-size: .38em;
-  vertical-align: .34em;
-  margin-left: .16em;
-  letter-spacing: .02em;
+.masthead__leaf--l { left: 15%; transform: rotate(-16deg); }
+.masthead__leaf--r { right: 15%; transform: rotate(16deg) scaleX(-1); }
+
+/* on the work tabs only the flower border stays */
+.masthead.is-compact .masthead__mid,
+.masthead.is-compact .masthead__leaf,
+.masthead.is-compact .vine,
+.masthead.is-compact .tagline { display: none; }
+
+.masthead.is-compact .garland {
+  max-height: clamp(62px, 8vw, 104px);
+  margin-bottom: 0;
 }
 
 /* --- leafy heart divider ---------------------------------------------- */
@@ -158,7 +193,7 @@ a { color: var(--pink); }
   height: 17px;
   flex: none;
   transform: rotate(var(--rot, 0deg));
-  --petal: #8AA84A;
+  --petal: #79874A;
 }
 
 .vine__heart { width: 20px; height: 20px; flex: none; --petal: var(--pink); }
@@ -167,9 +202,9 @@ a { color: var(--pink); }
 
 /* --- tagline ---------------------------------------------------------- */
 .tagline {
-  margin: 0 auto clamp(1rem, 2.6vw, 1.6rem);
-  color: #4A3B22;
-  font-size: clamp(1rem, 2.4vw, 1.3rem);
+  margin: clamp(.3rem, 1vw, .7rem) auto clamp(1rem, 2.6vw, 1.5rem);
+  color: #5E5A1E;
+  font-size: clamp(1rem, 2.4vw, 1.32rem);
   font-weight: 500;
   letter-spacing: .01em;
 }
@@ -191,7 +226,7 @@ a { color: var(--pink); }
   max-width: 1120px;
   background: var(--plum);
   border-radius: 999px;
-  box-shadow: 0 3px 0 rgba(75, 58, 34, .22);
+  box-shadow: 0 3px 0 rgba(74, 61, 30, .26);
 }
 
 .menubar__list li { display: flex; align-items: center; }
@@ -219,7 +254,7 @@ a { color: var(--pink); }
   transition: background .18s ease, color .18s ease;
 }
 
-.menuitem:hover { color: #F7C7A0; }
+.menuitem:hover { color: #EFC48A; }
 
 .menuitem.is-active {
   background: var(--cream);
@@ -352,14 +387,14 @@ a { color: var(--pink); }
   border: 0;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 3px 0 rgba(75, 58, 34, .3);
+  box-shadow: 0 3px 0 rgba(74, 61, 30, .34);
   transition: background .18s ease, transform .18s ease;
 }
 
 .btn:hover { background: var(--berry); transform: translateY(-2px); }
-.btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(75, 58, 34, .3); }
+.btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(74, 61, 30, .34); }
 
-.btn__flower { width: 15px; height: 15px; flex: none; --petal: #E8792B; --eye: #F7F0DC; }
+.btn__flower { width: 15px; height: 15px; flex: none; --petal: #E67B22; --eye: #F1DBB2; }
 
 /* --- "what I make" cards ---------------------------------------------- */
 .makes {
@@ -401,9 +436,9 @@ a { color: var(--pink); }
   transition: transform .18s ease, background .18s ease;
 }
 
-.makes__grid a:hover { transform: translateY(-4px) rotate(-1deg); background: #F4E9CB; }
+.makes__grid a:hover { transform: translateY(-4px) rotate(-1deg); background: #F4E4BE; }
 
-.makes__grid svg { width: 62px; height: 62px; overflow: visible; }
+.makes__grid img { width: 68px; height: 68px; }
 
 .makes__grid span {
   font-family: var(--display);
@@ -447,7 +482,7 @@ a { color: var(--pink); }
   transition: background .18s ease, color .18s ease;
 }
 
-.subtab:hover { background: rgba(90, 19, 56, .1); }
+.subtab:hover { background: rgba(80, 21, 48, .12); }
 
 .subtab.is-active { background: var(--plum); color: var(--cream); }
 
@@ -518,7 +553,7 @@ a { color: var(--pink); }
   font-size: .78rem;
   letter-spacing: .09em;
   text-transform: uppercase;
-  color: #55492F;
+  color: #574C24;
 }
 
 .project__blurb { margin: .5rem 0 1.2rem; max-width: 62ch; }
@@ -552,7 +587,7 @@ a { color: var(--pink); }
   border: 5px solid var(--cream);
   outline: 2px solid var(--ink-soft);
   outline-offset: -1px;
-  box-shadow: 0 5px 0 rgba(75, 58, 34, .18);
+  box-shadow: 0 5px 0 rgba(74, 61, 30, .22);
 }
 
 .project__photo:hover { transform: rotate(0deg) scale(1.03); z-index: 20; }
@@ -633,7 +668,7 @@ a { color: var(--pink); }
 
 .inquiry__status { margin: 0; font-size: .9rem; min-height: 1.2em; }
 .inquiry__status.is-error { color: var(--berry); font-weight: 600; }
-.inquiry__status.is-ok { color: #3D6B24; font-weight: 600; }
+.inquiry__status.is-ok { color: #4A6B1E; font-weight: 600; }
 
 .contact__aside { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
 
@@ -708,19 +743,17 @@ a { color: var(--pink); }
 }
 
 .footer__mark {
-  font-family: var(--display);
-  font-size: clamp(1.4rem, 3.4vw, 2rem);
-  color: var(--plum);
-  margin: .2rem 0 0;
+  display: block;
+  width: min(62%, 220px);
+  height: auto;
+  margin: 0 auto .5rem;
 }
-
-.footer__mark span { color: var(--orange); font-size: .5em; vertical-align: .8em; }
 
 .footer__tag {
   margin: .1rem 0 1rem;
   font-size: .95rem;
   letter-spacing: .04em;
-  color: #4A3B22;
+  color: #5E5A1E;
 }
 
 .footer__insta {
@@ -739,7 +772,7 @@ a { color: var(--pink); }
   margin: 1rem 0 0;
   font-size: .8rem;
   letter-spacing: .04em;
-  color: #6A5A42;
+  color: #6E6136;
 }
 
 /* ---------------------------------------------------------------------
@@ -754,7 +787,7 @@ a { color: var(--pink); }
   justify-content: center;
   gap: .5rem;
   padding: clamp(1rem, 4vw, 3rem);
-  background: rgba(67, 14, 42, .93);
+  background: rgba(58, 14, 34, .94);
 }
 
 .lightbox[hidden] { display: none; }
@@ -817,7 +850,7 @@ a { color: var(--pink); }
     letter-spacing: .1em;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: 0 3px 0 rgba(75, 58, 34, .22);
+    box-shadow: 0 3px 0 rgba(74, 61, 30, .26);
   }
 
   .menubar__bars { display: flex; flex-direction: column; gap: 3px; }
@@ -843,17 +876,13 @@ a { color: var(--pink); }
     width: 100%;
     height: 1px;
     margin: 0;
-    background: rgba(247, 240, 220, .22);
+    background: rgba(241, 219, 178, .24);
   }
 
   .menuitem { text-align: center; padding: .7rem; font-size: .8rem; }
 }
 
 @media (max-width: 720px) {
-  .banner { aspect-ratio: 2.4 / 1; }
-  .bloom,
-  .bg-leaf { width: calc(var(--w) * 1.4); }
-
   /* the collage stacks into a scrapbook column */
   .project__stage {
     aspect-ratio: auto;
@@ -879,7 +908,7 @@ a { color: var(--pink); }
 @media (max-width: 520px) {
   .frame__flower--bl { display: none; }
   .makes__grid { grid-template-columns: 1fr 1fr; }
-  .makes__grid svg { width: 48px; height: 48px; }
+  .makes__grid img { width: 52px; height: 52px; }
   .makes__grid span { font-size: .92rem; }
   .makes__grid em { display: none; }
 }

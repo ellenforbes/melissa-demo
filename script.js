@@ -157,10 +157,10 @@ const LAYOUTS = {
 
 /* Flower colourways, cycled so each section head gets its own bloom. */
 const FLOWERS = [
-  { id: 'fl-daisy',  style: '--petal:#A9BE3B;--eye:#D6246F;--pupil:#F7F0DC;--dot:#F7F0DC' },
-  { id: 'fl-cosmos', style: '--petal:#E8792B;--eye:#B31A5E;--pupil:#F7F0DC' },
-  { id: 'fl-aster',  style: '--petal:#3E7FA6;--petal2:#D6246F;--eye:#E8792B;--pupil:#A9BE3B' },
-  { id: 'fl-bloom',  style: '--petal:#D6246F;--petal2:#E8792B;--eye:#3E7FA6;--pupil:#F7F0DC' },
+  { id: 'fl-daisy',  style: '--petal:#B0A622;--eye:#B32251;--pupil:#F1DBB2;--dot:#F1DBB2' },
+  { id: 'fl-cosmos', style: '--petal:#E67B22;--eye:#8A1739;--pupil:#F1DBB2' },
+  { id: 'fl-aster',  style: '--petal:#316378;--petal2:#B32251;--eye:#E67B22;--pupil:#B0A622' },
+  { id: 'fl-bloom',  style: '--petal:#B32251;--petal2:#E67B22;--eye:#316378;--pupil:#F1DBB2' },
 ];
 
 /* --------------------------------------------------------------------- */
@@ -208,7 +208,7 @@ const projectMarkup = (section, project, i) => `
            aria-labelledby="subtab-${section.id}-${i}" tabindex="-1"${i === 0 ? '' : ' hidden'}>
         <article class="project">
           <div class="project__head">
-            <h2 class="project__title">${project.title}</h2>
+            <h3 class="project__title">${project.title}</h3>
             <span class="project__meta">${project.meta}</span>
           </div>
           <p class="project__blurb">${project.blurb}</p>
@@ -278,7 +278,7 @@ const renderSection = (section, index) => {
   panel.innerHTML = `
     <div class="slab">
       <header class="panel__head">
-        <h1 class="display">${section.title}</h1>
+        <h2 class="display">${section.title}</h2>
         <div class="rule" aria-hidden="true">
           <svg viewBox="0 0 100 100" style="${flower.style}"><use href="#${flower.id}" /></svg>
         </div>
@@ -445,6 +445,11 @@ const activateTab = (name, opts = {}) => {
   $$('.panel').forEach((panel) => {
     panel.hidden = panel.id !== `panel-${name}`;
   });
+
+  /* The full banner artwork belongs to the front page. On the work and
+     contact tabs it crops down to the flower border so the galleries
+     start near the top of the screen. */
+  $('.masthead').classList.toggle('is-compact', name !== 'about');
 
   closeMenu();
 

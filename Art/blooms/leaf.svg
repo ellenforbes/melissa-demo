@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<path fill="#5E6B43" stroke="#3F4A22" stroke-width="1.05" stroke-linejoin="round" d="M50.0 6.0C52.3 8.2 54.0 8.9 57.8 13.3C61.6 17.7 60.0 16.3 62.6 20.7C65.1 25.1 64.5 23.6 66.3 28.0C68.1 32.4 67.4 30.9 68.6 35.3C69.8 39.7 70.1 38.3 70.4 42.7C70.7 47.1 69.7 45.6 69.5 50.0C69.3 54.4 69.9 52.9 69.7 57.3C69.5 61.7 70.0 60.3 68.9 64.7C67.8 69.1 67.8 67.6 66.0 72.0C64.1 76.4 65.2 74.9 62.7 79.3C60.1 83.7 61.2 82.3 57.4 86.7C53.6 91.1 52.2 91.8 50.0 94.0C47.8 96.2 52.3 96.2 50.0 94.0C47.7 91.8 46.0 91.1 42.3 86.7C38.6 82.3 39.9 83.7 37.6 79.3C35.4 74.9 36.5 76.4 34.8 72.0C33.2 67.6 33.4 69.1 32.2 64.7C30.9 60.3 31.5 61.7 30.6 57.3C29.7 52.9 29.3 54.4 29.1 50.0C28.9 45.6 28.9 47.1 29.8 42.7C30.8 38.3 31.0 39.7 32.2 35.3C33.5 30.9 32.1 32.4 33.9 28.0C35.6 23.6 35.5 25.1 38.1 20.7C40.6 16.3 38.7 17.7 42.3 13.3C45.9 8.9 47.7 8.2 50.0 6.0C52.3 3.8 47.7 3.8 50.0 6.0Z"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 8.2C50.0 33.3 50.0 66.7 50.0 91.8"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 25.8C54.0 22.9 59.2 19.0 63.2 16.1"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 25.8C46.0 22.9 40.8 19.0 36.8 16.1"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 41.6C46.0 38.7 40.8 34.9 36.8 32.0"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 41.6C54.0 38.7 59.2 34.9 63.2 32.0"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 57.5C54.0 54.6 59.2 50.7 63.2 47.8"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 57.5C46.0 54.6 40.8 50.7 36.8 47.8"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 73.3C46.0 70.4 40.8 66.5 36.8 63.6"/>
+<path fill="none" stroke="#3F4A22" stroke-width="0.62" stroke-linecap="round" d="M50.0 73.3C54.0 70.4 59.2 66.5 63.2 63.6"/>
+</svg>
