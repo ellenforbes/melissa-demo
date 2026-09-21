@@ -9,6 +9,8 @@ Pipeline per colour:
   -> Ramer-Douglas-Peucker simplify
   -> corner-preserving Catmull-Rom smoothing into cubic beziers
 """
+import math
+
 import numpy as np
 from PIL import Image
 
@@ -103,7 +105,7 @@ def tidy(m):
     """Fill the speckles the painting's texture leaves inside a letter, then
        shave the nubs it leaves on the outside, so the outline that gets
        traced is already smooth before any curve fitting happens."""
-    return open_(close(m, 3), 2)
+    return open_(close(m, 3), 3)
 
 
 # --------------------------------------------------------------- components -
@@ -197,11 +199,65 @@ import sys
 sys.setrecursionlimit(50000)
 
 
+def despike(pts, max_edge=13.0, max_height=5.0):
+    """Drop the tiny horns the canvas texture leaves on a letter's edge.
+
+    A horn is a vertex that juts out on two short edges and barely leaves
+    the line between its neighbours. Testing the edge lengths as well as
+    the height is what keeps this from flattening real curves, whose
+    vertices sit far apart after simplification.
+    """
+    pts = list(pts)
+    while len(pts) > 8:
+        n = len(pts)
+        drop = [False] * n
+        i = 0
+        while i < n:
+            a, b, c = pts[i - 1], pts[i], pts[(i + 1) % n]
+            e1 = math.hypot(b[0] - a[0], b[1] - a[1])
+            e2 = math.hypot(c[0] - b[0], c[1] - b[1])
+            dx, dy = c[0] - a[0], c[1] - a[1]
+            span = math.hypot(dx, dy)
+            if span and min(e1, e2) < max_edge:
+                d = abs(dx * (b[1] - a[1]) - dy * (b[0] - a[0])) / span
+                if d < max_height:
+                    drop[i] = True
+                    i += 1              # never drop two in a row in one pass
+            i += 1
+        if not any(drop):
+            break
+        pts = [p for p, d in zip(pts, drop) if not d]
+    return pts
+
+
+def relax(pts, rounds=2, weight=0.22, corner_deg=88):
+    """Ease the residual waver out of an outline, leaving real corners be."""
+    for _ in range(rounds):
+        n = len(pts)
+        out = []
+        for i in range(n):
+            a, b, c = pts[i - 1], pts[i], pts[(i + 1) % n]
+            v1 = (b[0] - a[0], b[1] - a[1])
+            v2 = (c[0] - b[0], c[1] - b[1])
+            n1, n2 = math.hypot(*v1), math.hypot(*v2)
+            if not n1 or not n2:
+                out.append(b)
+                continue
+            cosv = max(-1.0, min(1.0, (v1[0] * v2[0] + v1[1] * v2[1]) / (n1 * n2)))
+            if math.degrees(math.acos(cosv)) > corner_deg:
+                out.append(b)
+            else:
+                out.append((b[0] * (1 - weight) + (a[0] + c[0]) / 2 * weight,
+                            b[1] * (1 - weight) + (a[1] + c[1]) / 2 * weight))
+        pts = out
+    return pts
+
+
 def simplify_ring(loop, eps):
     pts = rdp(loop + [loop[0]], eps)
     if pts[0] == pts[-1]:
         pts = pts[:-1]
-    return pts
+    return relax(despike(pts))
 
 
 # -------------------------------------------------------------------- smooth
@@ -270,7 +326,7 @@ for name, hexcol, keep in picked:
     ds = []
     swap = HEART_COUNTERS.get(name)
     for (bx0, by0, bx1, by1), sub in keep:
-        loops = [simplify_ring(l, 2.4) for l in rings(sub)]
+        loops = [simplify_ring(l, 1.7) for l in rings(sub)]
         loops = [l for l in loops if len(l) >= 3 and ring_area(l) >= MIN_RING]
         wants_hearts = swap and bx0 <= swap[0] <= bx1 and by0 <= swap[1] <= by1
 
