@@ -3,312 +3,466 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Melissa - Artist · Painter · Big-art Maker</title>
-  <meta name="description" content="Melissa is an artist who likes big art: paint, props, costumes. Faux finishes, signs, homes, teaching, and interactive events." />
+  <title>Love, Melissa xo - human made art</title>
+  <meta name="description" content="Melissa is a multidisciplinary artist, scenic painter and maker. Giant paint-by-numbers, faux finishes, scenic art and all sorts of wonderfully strange things that involve paint, colour and craft." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="favicon.svg" />
-  <meta name="theme-color" content="#FF1F8A" />
+  <meta name="theme-color" content="#5A1338" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,wght@0,500;0,700;0,900;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Caveat:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Reusable squiggle SVG (only inline SVG kept; everything else uses PNG motifs) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- =====================================================================
+       FLOWER LIBRARY
+       Every bloom on the page is one of these symbols, recoloured through
+       CSS custom properties set on the instance:
+         --petal  outer petals      --petal2  inner petals
+         --eye    flower centre     --pupil   centre highlight
+         --dot    centre speckles   --line    outline
+       ===================================================================== -->
+  <svg width="0" height="0" class="flower-defs" aria-hidden="true" focusable="false">
     <defs>
-      <symbol id="squiggle" viewBox="0 0 200 14" preserveAspectRatio="none">
-        <path d="M2 8 Q 18 0 36 8 T 70 8 T 104 8 T 138 8 T 172 8 T 198 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path id="pt-narrow" d="M50 50C44.5 37 44.5 17 50 7c5.5 10 5.5 30 0 43z" />
+      <path id="pt-round"  d="M50 52C36 40 33 19 50 6c17 13 14 34 0 46z" />
+      <path id="pt-point"  d="M50 52C40 41 39 20 50 4c11 16 10 37 0 48z" />
+      <path id="pt-blob"   d="M50 50c-11 0-19-8-19-18S39 13 50 13s19 9 19 19-8 18-19 18z" />
+
+      <!-- Long-petalled daisy -->
+      <symbol id="fl-daisy" viewBox="0 0 100 100">
+        <g fill="var(--petal,#A9BE3B)" stroke="var(--line,#4B3A22)" stroke-width="1.4" stroke-linejoin="round">
+          <use href="#pt-narrow" transform="rotate(0 50 50)" />
+          <use href="#pt-narrow" transform="rotate(22.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(45 50 50)" />
+          <use href="#pt-narrow" transform="rotate(67.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(90 50 50)" />
+          <use href="#pt-narrow" transform="rotate(112.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(135 50 50)" />
+          <use href="#pt-narrow" transform="rotate(157.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(180 50 50)" />
+          <use href="#pt-narrow" transform="rotate(202.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(225 50 50)" />
+          <use href="#pt-narrow" transform="rotate(247.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(270 50 50)" />
+          <use href="#pt-narrow" transform="rotate(292.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(315 50 50)" />
+          <use href="#pt-narrow" transform="rotate(337.5 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="16" fill="var(--eye,#D6246F)" stroke="var(--line,#4B3A22)" stroke-width="1.4" />
+        <circle cx="50" cy="50" r="8.5" fill="var(--pupil,#F7F0DC)" stroke="var(--line,#4B3A22)" stroke-width="1.2" />
+        <g fill="var(--dot,#F7F0DC)">
+          <circle cx="50" cy="38" r="1.7" /><circle cx="58.5" cy="41.5" r="1.7" />
+          <circle cx="62" cy="50" r="1.7" /><circle cx="58.5" cy="58.5" r="1.7" />
+          <circle cx="50" cy="62" r="1.7" /><circle cx="41.5" cy="58.5" r="1.7" />
+          <circle cx="38" cy="50" r="1.7" /><circle cx="41.5" cy="41.5" r="1.7" />
+        </g>
+      </symbol>
+
+      <!-- Six wide petals, cosmos-ish -->
+      <symbol id="fl-cosmos" viewBox="0 0 100 100">
+        <g fill="var(--petal,#E8792B)" stroke="var(--line,#4B3A22)" stroke-width="1.6" stroke-linejoin="round">
+          <use href="#pt-round" transform="rotate(0 50 50)" />
+          <use href="#pt-round" transform="rotate(60 50 50)" />
+          <use href="#pt-round" transform="rotate(120 50 50)" />
+          <use href="#pt-round" transform="rotate(180 50 50)" />
+          <use href="#pt-round" transform="rotate(240 50 50)" />
+          <use href="#pt-round" transform="rotate(300 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="15" fill="var(--eye,#B31A5E)" stroke="var(--line,#4B3A22)" stroke-width="1.5" />
+        <circle cx="50" cy="50" r="6.5" fill="var(--pupil,#F7F0DC)" />
+        <g fill="var(--dot,#F7F0DC)">
+          <circle cx="50" cy="39.5" r="2" /><circle cx="59" cy="45" r="2" />
+          <circle cx="59" cy="55" r="2" /><circle cx="50" cy="60.5" r="2" />
+          <circle cx="41" cy="55" r="2" /><circle cx="41" cy="45" r="2" />
+        </g>
+      </symbol>
+
+      <!-- Eight pointed petals with a second layer inside -->
+      <symbol id="fl-bloom" viewBox="0 0 100 100">
+        <g fill="var(--petal,#D6246F)" stroke="var(--line,#4B3A22)" stroke-width="1.5" stroke-linejoin="round">
+          <use href="#pt-point" transform="rotate(0 50 50)" />
+          <use href="#pt-point" transform="rotate(45 50 50)" />
+          <use href="#pt-point" transform="rotate(90 50 50)" />
+          <use href="#pt-point" transform="rotate(135 50 50)" />
+          <use href="#pt-point" transform="rotate(180 50 50)" />
+          <use href="#pt-point" transform="rotate(225 50 50)" />
+          <use href="#pt-point" transform="rotate(270 50 50)" />
+          <use href="#pt-point" transform="rotate(315 50 50)" />
+        </g>
+        <g fill="var(--petal2,#E8792B)" stroke="var(--line,#4B3A22)" stroke-width="2.2" stroke-linejoin="round"
+           transform="rotate(22.5 50 50) translate(19 19) scale(0.62)">
+          <use href="#pt-point" transform="rotate(0 50 50)" />
+          <use href="#pt-point" transform="rotate(45 50 50)" />
+          <use href="#pt-point" transform="rotate(90 50 50)" />
+          <use href="#pt-point" transform="rotate(135 50 50)" />
+          <use href="#pt-point" transform="rotate(180 50 50)" />
+          <use href="#pt-point" transform="rotate(225 50 50)" />
+          <use href="#pt-point" transform="rotate(270 50 50)" />
+          <use href="#pt-point" transform="rotate(315 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="12" fill="var(--eye,#3E7FA6)" stroke="var(--line,#4B3A22)" stroke-width="1.4" />
+        <circle cx="50" cy="50" r="5" fill="var(--pupil,#F7F0DC)" />
+      </symbol>
+
+      <!-- Layered aster: wide petals with narrow ones between -->
+      <symbol id="fl-aster" viewBox="0 0 100 100">
+        <g fill="var(--petal,#3E7FA6)" stroke="var(--line,#4B3A22)" stroke-width="1.5" stroke-linejoin="round">
+          <use href="#pt-round" transform="rotate(0 50 50)" />
+          <use href="#pt-round" transform="rotate(45 50 50)" />
+          <use href="#pt-round" transform="rotate(90 50 50)" />
+          <use href="#pt-round" transform="rotate(135 50 50)" />
+          <use href="#pt-round" transform="rotate(180 50 50)" />
+          <use href="#pt-round" transform="rotate(225 50 50)" />
+          <use href="#pt-round" transform="rotate(270 50 50)" />
+          <use href="#pt-round" transform="rotate(315 50 50)" />
+        </g>
+        <g fill="var(--petal2,#D6246F)" stroke="var(--line,#4B3A22)" stroke-width="1.5" stroke-linejoin="round">
+          <use href="#pt-narrow" transform="rotate(22.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(67.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(112.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(157.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(202.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(247.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(292.5 50 50)" />
+          <use href="#pt-narrow" transform="rotate(337.5 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="14" fill="var(--eye,#E8792B)" stroke="var(--line,#4B3A22)" stroke-width="1.4" />
+        <circle cx="50" cy="50" r="7" fill="var(--pupil,#A9BE3B)" stroke="var(--line,#4B3A22)" stroke-width="1.1" />
+      </symbol>
+
+      <!-- Five round petals, the little one -->
+      <symbol id="fl-mini" viewBox="0 0 100 100">
+        <g fill="var(--petal,#D6246F)" stroke="var(--line,#4B3A22)" stroke-width="2.4" stroke-linejoin="round">
+          <use href="#pt-blob" transform="rotate(0 50 50)" />
+          <use href="#pt-blob" transform="rotate(72 50 50)" />
+          <use href="#pt-blob" transform="rotate(144 50 50)" />
+          <use href="#pt-blob" transform="rotate(216 50 50)" />
+          <use href="#pt-blob" transform="rotate(288 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="11" fill="var(--eye,#E8792B)" stroke="var(--line,#4B3A22)" stroke-width="2.2" />
+      </symbol>
+
+      <!-- Flat five-petal flower for nav separators: no outline, reads at 10px -->
+      <symbol id="fl-tiny" viewBox="0 0 100 100">
+        <g fill="var(--petal,currentColor)">
+          <use href="#pt-blob" transform="rotate(0 50 50)" />
+          <use href="#pt-blob" transform="rotate(72 50 50)" />
+          <use href="#pt-blob" transform="rotate(144 50 50)" />
+          <use href="#pt-blob" transform="rotate(216 50 50)" />
+          <use href="#pt-blob" transform="rotate(288 50 50)" />
+        </g>
+        <circle cx="50" cy="50" r="12" fill="var(--eye,#5A1338)" />
+      </symbol>
+
+      <symbol id="leaf" viewBox="0 0 100 100">
+        <path d="M50 96C24 78 18 44 50 6c32 38 26 72 0 90z"
+              fill="var(--petal,#6C8C3C)" stroke="var(--line,#4B3A22)" stroke-width="1.6" stroke-linejoin="round" />
+        <path d="M50 92V16M50 44 33 30M50 44l17-14M50 64 33 50M50 64l17-14"
+              fill="none" stroke="var(--line,#4B3A22)" stroke-width="1.4" stroke-linecap="round" />
+      </symbol>
+
+      <symbol id="heart" viewBox="0 0 100 100">
+        <path d="M50 88C16 64 8 44 20 30c10-12 25-7 30 6 5-13 20-18 30-6 12 14 4 34-30 58z"
+              fill="var(--petal,#D6246F)" stroke="var(--line,#4B3A22)" stroke-width="2" stroke-linejoin="round" />
       </symbol>
     </defs>
   </svg>
 
-  <!-- ============ NAV ============ -->
-  <header class="nav">
-    <a href="#top" class="nav__logo" aria-label="Melissa - home">
-      <span class="nav__name">Melissa</span>
-      <img class="nav__brush" src="Motifs/PaintbrushOne.png" alt="" />
+  <!-- =====================================================================
+       MASTHEAD: flower banner, wordmark, tagline, menu bar
+       ===================================================================== -->
+  <header class="masthead" id="top">
+
+    <div class="banner" aria-hidden="true">
+      <!-- leaves sit behind the blooms -->
+      <svg class="bg-leaf" style="--x:12%;--y:78%;--w:8%;--rot:-38deg" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+      <svg class="bg-leaf" style="--x:27%;--y:84%;--w:7%;--rot:25deg;--petal:#8AA84A" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+      <svg class="bg-leaf" style="--x:45%;--y:80%;--w:9%;--rot:-15deg" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+      <svg class="bg-leaf" style="--x:61%;--y:84%;--w:7%;--rot:40deg;--petal:#8AA84A" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+      <svg class="bg-leaf" style="--x:78%;--y:80%;--w:8%;--rot:-30deg" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+      <svg class="bg-leaf" style="--x:92%;--y:83%;--w:7%;--rot:18deg;--petal:#8AA84A" viewBox="0 0 100 100"><use href="#leaf" /></svg>
+
+      <!-- the big blooms -->
+      <svg class="bloom" style="--x:5%;--y:46%;--w:17%;--rot:-8deg;--petal:#A9BE3B;--eye:#D6246F;--pupil:#F7F0DC;--dot:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-daisy" /></svg>
+      <svg class="bloom" style="--x:20%;--y:33%;--w:15%;--rot:11deg;--petal:#E8792B;--eye:#B31A5E;--pupil:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-cosmos" /></svg>
+      <svg class="bloom" style="--x:36%;--y:48%;--w:20%;--rot:-5deg;--petal:#D6246F;--petal2:#E8792B;--eye:#3E7FA6;--pupil:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-bloom" /></svg>
+      <svg class="bloom" style="--x:55%;--y:35%;--w:17%;--rot:7deg;--petal:#3E7FA6;--petal2:#D6246F;--eye:#E8792B;--pupil:#A9BE3B" viewBox="0 0 100 100"><use href="#fl-aster" /></svg>
+      <svg class="bloom" style="--x:71%;--y:47%;--w:16%;--rot:-11deg;--petal:#A9BE3B;--eye:#E8792B;--pupil:#F7F0DC;--dot:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-daisy" /></svg>
+      <svg class="bloom" style="--x:86%;--y:33%;--w:14%;--rot:6deg;--petal:#B31A5E;--petal2:#D6246F;--eye:#E8792B;--pupil:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-bloom" /></svg>
+      <svg class="bloom" style="--x:97%;--y:50%;--w:15%;--rot:-14deg;--petal:#E8792B;--eye:#3E7FA6;--pupil:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-cosmos" /></svg>
+
+      <!-- speckles of small flowers -->
+      <svg class="bloom" style="--x:14%;--y:88%;--w:5%;--rot:14deg;--petal:#D6246F;--eye:#E8792B" viewBox="0 0 100 100"><use href="#fl-mini" /></svg>
+      <svg class="bloom" style="--x:31%;--y:16%;--w:4.5%;--rot:-20deg;--petal:#3E7FA6;--eye:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-mini" /></svg>
+      <svg class="bloom" style="--x:50%;--y:88%;--w:5%;--rot:8deg;--petal:#E8792B;--eye:#B31A5E" viewBox="0 0 100 100"><use href="#fl-mini" /></svg>
+      <svg class="bloom" style="--x:67%;--y:14%;--w:4.5%;--rot:24deg;--petal:#A9BE3B;--eye:#D6246F" viewBox="0 0 100 100"><use href="#fl-mini" /></svg>
+      <svg class="bloom" style="--x:82%;--y:88%;--w:5%;--rot:-10deg;--petal:#D6246F;--eye:#F7F0DC" viewBox="0 0 100 100"><use href="#fl-mini" /></svg>
+    </div>
+
+    <a class="wordmark" href="#about" aria-label="Love, Melissa xo - home">
+      <span class="wordmark__love">Love,</span>
+      <span class="wordmark__name">Melissa<span class="wordmark__xo">xo</span></span>
     </a>
-    <nav class="nav__links" aria-label="Primary">
-      <div class="nav__tabs" role="tablist" aria-label="Site sections">
-        <a class="tab is-active" id="tab-about" role="tab" href="#about" data-tab="about" aria-controls="panel-about" aria-selected="true">About</a>
-        <a class="tab" id="tab-services" role="tab" href="#services" data-tab="services" aria-controls="panel-services" aria-selected="false" tabindex="-1">Services</a>
-        <a class="tab" id="tab-portfolio" role="tab" href="#portfolio" data-tab="portfolio" aria-controls="panel-portfolio" aria-selected="false" tabindex="-1">Portfolio</a>
-        <a class="tab" id="tab-faq" role="tab" href="#faq" data-tab="faq" aria-controls="panel-faq" aria-selected="false" tabindex="-1">FAQ</a>
-      </div>
-      <a class="nav__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
-        </svg>
-      </a>
+
+    <div class="vine" aria-hidden="true">
+      <span class="vine__stroke"></span>
+      <svg class="vine__leaf" viewBox="0 0 100 100" style="--rot:-58deg"><use href="#leaf" /></svg>
+      <svg class="vine__heart" viewBox="0 0 100 100"><use href="#heart" /></svg>
+      <svg class="vine__leaf" viewBox="0 0 100 100" style="--rot:58deg"><use href="#leaf" /></svg>
+      <span class="vine__stroke"></span>
+    </div>
+
+    <p class="tagline">a little art, from me to you.</p>
+
+    <nav class="menubar" aria-label="Primary">
+      <button class="menubar__toggle" aria-expanded="false" aria-controls="menu-list">
+        <span class="menubar__toggle-label">What I make</span>
+        <span class="menubar__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+      </button>
+      <ul class="menubar__list" id="menu-list" role="tablist" aria-label="Site sections">
+        <li>
+          <a class="menuitem" id="tab-giant-pbn" role="tab" href="#giant-pbn" data-tab="giant-pbn"
+             aria-controls="panel-giant-pbn" aria-selected="false" tabindex="-1">Giant Paint-by-Numbers</a>
+        </li>
+        <li>
+          <a class="menuitem" id="tab-faux-finishes" role="tab" href="#faux-finishes" data-tab="faux-finishes"
+             aria-controls="panel-faux-finishes" aria-selected="false" tabindex="-1">Faux Finishes</a>
+        </li>
+        <li>
+          <a class="menuitem" id="tab-scenic-art" role="tab" href="#scenic-art" data-tab="scenic-art"
+             aria-controls="panel-scenic-art" aria-selected="false" tabindex="-1">Scenic Art</a>
+        </li>
+        <li>
+          <a class="menuitem" id="tab-other-mischief" role="tab" href="#other-mischief" data-tab="other-mischief"
+             aria-controls="panel-other-mischief" aria-selected="false" tabindex="-1">Other Mischief</a>
+        </li>
+        <li>
+          <a class="menuitem is-active" id="tab-about" role="tab" href="#about" data-tab="about"
+             aria-controls="panel-about" aria-selected="true">About</a>
+        </li>
+        <li>
+          <a class="menuitem" id="tab-contact" role="tab" href="#contact" data-tab="contact"
+             aria-controls="panel-contact" aria-selected="false" tabindex="-1">Contact</a>
+        </li>
+      </ul>
     </nav>
-    <button class="nav__menu-btn" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </header>
 
-  <div class="tabs__panels">
-  <div class="tab-panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="-1">
+  <main class="panels">
 
-  <!-- ============ HERO ============ -->
-  <section id="top" class="hero">
-    <div class="hero__motifs" aria-hidden="true">
-      <img class="motif--splat-rb"    src="Motifs/SplatOne.png"  alt="" />
-      <img class="motif--splot-blue"  src="Motifs/SplotOne.png"  alt="" />
-      <img class="motif--splot-green" src="Motifs/SplotTwo.png"  alt="" />
-    </div>
+    <!-- ================= ABOUT ================= -->
+    <section class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="-1">
+      <div class="slab">
+        <div class="intro">
+          <figure class="frame frame--portrait">
+            <img src="Photos/BackgroundPaintingPhoto.jpg" alt="Melissa kneeling on a huge canvas, hand-lettering a Christmas poem in red and black" />
+            <svg class="frame__flower frame__flower--tl" viewBox="0 0 100 100" style="--petal:#E8792B;--eye:#D6246F"><use href="#fl-mini" /></svg>
+            <svg class="frame__flower frame__flower--br" viewBox="0 0 100 100" style="--petal:#D6246F;--eye:#A9BE3B"><use href="#fl-mini" /></svg>
+            <svg class="frame__flower frame__flower--bl" viewBox="0 0 100 100" style="--petal:#A9BE3B;--eye:#E8792B"><use href="#fl-mini" /></svg>
+          </figure>
 
-    <div class="hero__inner">
-      <p class="hero__kicker">artist · painter · prop maker</p>
-      <h1 class="hero__title">
-        Hi, I'm <span class="hero__name">Melissa</span><br/>
-        and I like
-        <span class="hero__big">
-          big&nbsp;art
-          <svg class="hero__squiggle" aria-hidden="true"><use href="#squiggle"/></svg>
-        </span>
-      </h1>
-      <p class="hero__sub">Paint, props, costumes &amp; everything in between.</p>
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="#portfolio">See my work</a>
-        <a class="btn btn--ghost" href="#faq">Get a quote</a>
-      </div>
-    </div>
-
-    <div class="hero__photo" aria-hidden="true">
-      <img src="Photos/ProfilePhoto.jpg" alt="" />
-      <span class="tape tape--tl"></span>
-      <span class="tape tape--br"></span>
-    </div>
-  </section>
-
-  <!-- pink drip dripping into next section -->
-  <img class="drip-divider" src="Motifs/HorizontalDripsOne.png" alt="" aria-hidden="true" />
-
-  <!-- ============ ABOUT ============ -->
-  <section id="about" class="about section">
-    <div class="section__head">
-      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">About</span>
-      <h2>Hey there <span class="wave">👋🏻</span></h2>
-    </div>
-    <div class="about__grid">
-      <div class="about__copy">
-        <p class="lead">
-          I'm Melissa, an artist who can't sit still. I paint walls, signs, props, costumes, and
-          anything else that needs a little more <em>oomph</em>.
-        </p>
-        <p>
-          Faux finishes that fool the eye. Hand-lettered signs. Murals that turn a kid's bedroom into
-          a portal. Costumes for the stage. If it can be painted, I'll probably try to paint it.
-        </p>
-        <p>
-          When I'm not painting, I'm teaching, both fine-art technique and the everyday handywoman
-          stuff most people never got shown. (You really <em>can</em> patch that hole yourself.)
-        </p>
-        <ul class="about__chips">
-          <li>Faux finishes</li>
-          <li>Murals</li>
-          <li>Hand-lettered signs</li>
-          <li>Props &amp; sets</li>
-          <li>Costumes</li>
-          <li>Teaching</li>
-        </ul>
-      </div>
-      <div class="about__media">
-        <img src="Photos/BackgroundPaintingPhoto.jpg" alt="Melissa at work on a large painting" />
-      </div>
-    </div>
-  </section>
-
-  <!-- teal drip flipped, dripping up out of services -->
-  <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsTwo.png" alt="" aria-hidden="true" />
-  </div>
-
-  <div class="tab-panel" id="panel-services" role="tabpanel" aria-labelledby="tab-services" tabindex="-1" hidden>
-
-  <!-- ============ SERVICES ============ -->
-  <section id="services" class="services section">
-    <div class="section__head">
-      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">Services</span>
-      <h2>What I do</h2>
-    </div>
-    <div class="services__grid">
-      <article class="card card--painting">
-        <img class="card__corner-drip" src="Motifs/HorizontalDripsOne.png" alt="" aria-hidden="true" />
-        <img class="card__icon" src="Motifs/PaintbrushOne.png" alt="" aria-hidden="true" />
-        <h3>Painting</h3>
-        <p class="card__lead">Faux finishes, signs, homes: the works.</p>
-        <ul>
-          <li>Faux finishes &amp; decorative surfaces</li>
-          <li>Custom hand-lettered signs</li>
-          <li>Murals &amp; feature walls</li>
-          <li>Whole-home interior painting</li>
-          <li>Props, sets &amp; costumes</li>
-        </ul>
-      </article>
-
-      <article class="card card--teaching">
-        <img class="card__corner-drip" src="Motifs/HorizontalDripsThree.png" alt="" aria-hidden="true" />
-        <img class="card__icon" src="Motifs/SplotOne.png" alt="" aria-hidden="true" />
-        <h3>Teaching</h3>
-        <p class="card__lead">Art skills, plus the home stuff nobody taught you.</p>
-        <ul>
-          <li>Faux finish workshops</li>
-          <li>School visits: elementary &amp; high school</li>
-          <li>Handywoman 101: caulk a tub, patch a hole</li>
-          <li>Brush, color &amp; surface fundamentals</li>
-        </ul>
-      </article>
-
-      <article class="card card--events">
-        <img class="card__corner-drip" src="Motifs/HorizontalDripsFour.png" alt="" aria-hidden="true" />
-        <img class="card__icon" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-        <h3>Events</h3>
-        <p class="card__lead">Interactive art that gets a crowd painting.</p>
-        <ul>
-          <li>Giant paint-by-numbers (it's a hit!)</li>
-          <li>Weddings &amp; birthdays</li>
-          <li>Community &amp; charity events</li>
-          <li>Sport tournaments</li>
-          <li>Custom interactive installs</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <!-- purple drip dripping into portfolio -->
-  <img class="drip-divider" src="Motifs/HorizontalDripsFive.png" alt="" aria-hidden="true" />
-  </div>
-
-  <div class="tab-panel" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" tabindex="-1" hidden>
-
-  <!-- ============ PORTFOLIO ============ -->
-  <section id="portfolio" class="portfolio section">
-    <div class="section__head">
-      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">Portfolio</span>
-      <h2>Recent projects</h2>
-      <p class="section__sub">A peek at what's been on my easel and in my workshop.</p>
-    </div>
-    <div id="portfolio-list" class="portfolio__list">
-      <!-- Projects rendered here by script.js -->
-    </div>
-  </section>
-
-  <!-- orange drip flipped going up into FAQ -->
-  <img class="drip-divider drip-divider--flip" src="Motifs/HorizontalDripsFour.png" alt="" aria-hidden="true" />
-  </div>
-
-  <div class="tab-panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq" tabindex="-1" hidden>
-
-  <!-- ============ FAQ + INQUIRY ============ -->
-  <section id="faq" class="faq section">
-    <div class="section__head">
-      <img class="splat-bg" src="Motifs/SplatOne.png" alt="" aria-hidden="true" />
-      <span class="eyebrow">FAQ &amp; Inquiries</span>
-      <h2>Got questions?</h2>
-    </div>
-
-    <div class="faq__grid">
-      <div class="faq__list">
-        <details>
-          <summary>What types of projects do you take on?</summary>
-          <p>Faux finishes, murals, hand-lettered signs, full-home interiors, props,
-             costumes, and interactive event installs. If you are not sure, just ask.</p>
-        </details>
-        <details>
-          <summary>How do I book you?</summary>
-          <p>Send me a note using the form on the right and pick the closest match
-             from the dropdown. I'll reply within a few days with next steps and a quote.</p>
-        </details>
-        <details>
-          <summary>Do you travel for jobs?</summary>
-          <p>Yes. Local jobs are easiest, but I travel for the right project. Travel
-             outside my home area is added to the quote.</p>
-        </details>
-        <details>
-          <summary>How does pricing work?</summary>
-          <p>Every project is different, so I quote per job after we chat about scope,
-             surface, materials, and timeline. Workshops and events have set rates that
-             scale with group size.</p>
-        </details>
-        <details>
-          <summary>What about deposits and timelines?</summary>
-          <p>Most jobs need a deposit to lock in the date. Lead time varies by season, so
-             the sooner you reach out, the better.</p>
-        </details>
-        <details>
-          <summary>Do you teach private workshops?</summary>
-          <p>Yes, for individuals, small groups, schools, and community programs.
-             Pick "Teaching" in the form and tell me what you'd like to learn.</p>
-        </details>
+          <div class="intro__copy">
+            <h1 class="display">Hi, I&rsquo;m Melissa.</h1>
+            <div class="rule" aria-hidden="true">
+              <svg viewBox="0 0 100 100" style="--petal:#D6246F;--eye:#E8792B"><use href="#fl-mini" /></svg>
+            </div>
+            <p>
+              I&rsquo;m a multidisciplinary artist, scenic painter and maker based in Winnipeg, Manitoba.
+              I work across murals, faux finishes, giant paint-by-numbers, scenic painting and all
+              sorts of wonderfully strange things that involve paint, colour and craft.
+            </p>
+            <p>
+              I love old techniques, big ideas, beautiful surfaces and making things by hand.
+              Bigger is usually better. Thanks for stopping by.
+            </p>
+            <p class="signature">Love, Melissa xo</p>
+            <a class="btn" href="#giant-pbn">
+              Come see what I make
+              <svg class="btn__flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#fl-tiny" /></svg>
+            </a>
+          </div>
+        </div>
       </div>
 
-      <form id="inquiry-form" class="inquiry" novalidate>
-        <h3>Send an inquiry</h3>
-        <p class="inquiry__intro">
-          Prefer email? <a href="mailto:hello@lovemelissa.xo">hello@lovemelissa.xo</a>
-        </p>
-        <label>
-          Your name
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          What's this about?
-          <select name="topic" required>
-            <option value="">Choose one…</option>
-            <option value="painting">Painting</option>
-            <option value="teaching">Teaching</option>
-            <option value="events">Events</option>
-            <option value="other">Other</option>
-          </select>
-        </label>
-        <label>
-          Tell me about your project
-          <textarea name="message" rows="5" required></textarea>
-        </label>
-        <button type="submit" class="btn btn--primary">Send it 🎨</button>
-        <p class="inquiry__status" role="status" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
-  </div>
-  </div>
+      <div class="makes">
+        <h2 class="makes__title">What I make</h2>
+        <ul class="makes__grid">
+          <li>
+            <a href="#giant-pbn">
+              <svg viewBox="0 0 100 100" aria-hidden="true" style="--petal:#A9BE3B;--eye:#D6246F;--pupil:#F7F0DC;--dot:#F7F0DC"><use href="#fl-daisy" /></svg>
+              <span>Giant Paint-by-Numbers</span>
+              <em>Hand-drawn, hand-numbered, painted by a crowd.</em>
+            </a>
+          </li>
+          <li>
+            <a href="#faux-finishes">
+              <svg viewBox="0 0 100 100" aria-hidden="true" style="--petal:#E8792B;--eye:#B31A5E;--pupil:#F7F0DC"><use href="#fl-cosmos" /></svg>
+              <span>Faux Finishes</span>
+              <em>Wood, marble and metal that are none of those things.</em>
+            </a>
+          </li>
+          <li>
+            <a href="#scenic-art">
+              <svg viewBox="0 0 100 100" aria-hidden="true" style="--petal:#3E7FA6;--petal2:#D6246F;--eye:#E8792B;--pupil:#A9BE3B"><use href="#fl-aster" /></svg>
+              <span>Scenic Art</span>
+              <em>Flats, backdrops and whole towns for the stage.</em>
+            </a>
+          </li>
+          <li>
+            <a href="#other-mischief">
+              <svg viewBox="0 0 100 100" aria-hidden="true" style="--petal:#D6246F;--petal2:#E8792B;--eye:#3E7FA6;--pupil:#F7F0DC"><use href="#fl-bloom" /></svg>
+              <span>Other Mischief</span>
+              <em>Furniture, props, costumes and odd requests.</em>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
 
-  <!-- ============ FOOTER ============ -->
+    <!-- ========== WORK PANELS: contents rendered by script.js ========== -->
+    <section class="panel" id="panel-giant-pbn" role="tabpanel" aria-labelledby="tab-giant-pbn" tabindex="-1" hidden></section>
+    <section class="panel" id="panel-faux-finishes" role="tabpanel" aria-labelledby="tab-faux-finishes" tabindex="-1" hidden></section>
+    <section class="panel" id="panel-scenic-art" role="tabpanel" aria-labelledby="tab-scenic-art" tabindex="-1" hidden></section>
+    <section class="panel" id="panel-other-mischief" role="tabpanel" aria-labelledby="tab-other-mischief" tabindex="-1" hidden></section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="panel" id="panel-contact" role="tabpanel" aria-labelledby="tab-contact" tabindex="-1" hidden>
+      <div class="slab">
+        <header class="panel__head">
+          <h1 class="display">Say hello</h1>
+          <div class="rule" aria-hidden="true">
+            <svg viewBox="0 0 100 100" style="--petal:#E8792B;--eye:#D6246F"><use href="#fl-mini" /></svg>
+          </div>
+          <p class="panel__blurb">
+            Got a wall, a stage, a wardrobe or a wildly impractical idea? Tell me about it.
+            I answer every note, usually within a few days.
+          </p>
+        </header>
+
+        <div class="contact">
+          <form id="inquiry-form" class="inquiry" novalidate>
+            <label>
+              Your name
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              What&rsquo;s this about?
+              <select name="topic" required>
+                <option value="">Choose one&hellip;</option>
+                <option value="giant paint-by-numbers">Giant Paint-by-Numbers</option>
+                <option value="faux finishes">Faux Finishes</option>
+                <option value="scenic art">Scenic Art</option>
+                <option value="mural">Mural</option>
+                <option value="teaching">Teaching or a workshop</option>
+                <option value="other">Something else entirely</option>
+              </select>
+            </label>
+            <label>
+              Tell me about your project
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+            <button type="submit" class="btn">
+              Send it
+              <svg class="btn__flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#fl-tiny" /></svg>
+            </button>
+            <p class="inquiry__status" role="status" aria-live="polite"></p>
+          </form>
+
+          <aside class="contact__aside">
+            <figure class="frame frame--small">
+              <img src="Photos/ProfilePhoto.jpg" alt="Melissa in a paint-covered sweater holding a sculpted prop" />
+              <svg class="frame__flower frame__flower--tl" viewBox="0 0 100 100" style="--petal:#3E7FA6;--eye:#E8792B"><use href="#fl-mini" /></svg>
+            </figure>
+            <p class="contact__direct">
+              Rather just email?<br />
+              <a href="mailto:hello@lovemelissa.xo">hello@lovemelissa.xo</a>
+            </p>
+            <a class="contact__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+                <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+              </svg>
+              @love.melissa.xo
+            </a>
+          </aside>
+        </div>
+
+        <div class="faq">
+          <h2 class="faq__title">Before you ask</h2>
+          <details>
+            <summary>What sort of projects do you take on?</summary>
+            <p>Giant paint-by-numbers, faux finishes, scenic art for stage and film, murals,
+               hand-lettering, furniture, props and costumes. If you are not sure whether it is
+               my sort of thing, ask anyway. It probably is.</p>
+          </details>
+          <details>
+            <summary>How does pricing work?</summary>
+            <p>Every project is different, so I quote per job once we have talked about scope,
+               surface, materials and timeline. Events and workshops have set rates that scale
+               with group size.</p>
+          </details>
+          <details>
+            <summary>Do you travel?</summary>
+            <p>Yes. Winnipeg and around is easiest, but I travel for the right project. Travel
+               outside my home area gets added to the quote.</p>
+          </details>
+          <details>
+            <summary>How far ahead should I book?</summary>
+            <p>Most jobs need a deposit to hold the date, and lead time swings with the season.
+               The sooner you get in touch, the better your odds of the date you want.</p>
+          </details>
+          <details>
+            <summary>Do you teach?</summary>
+            <p>I do: faux finish workshops, school visits, community programs, and the practical
+               handywoman skills nobody ever showed you. Pick &ldquo;Teaching or a workshop&rdquo;
+               above and tell me what you would like to learn.</p>
+          </details>
+          <details>
+            <summary>Can a crowd really paint a giant paint-by-numbers?</summary>
+            <p>They can, and it is the best part. I draw and number the canvas, mix the colours,
+               and set it up so anyone who can hold a brush can add to it. Weddings, birthdays,
+               fundraisers, festivals and corporate days all work.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
   <footer class="footer">
-    <div class="footer__inner">
-      <a class="footer__logo" href="#top">
-        <img class="footer__brush" src="Motifs/PaintbrushOne.png" alt="" />
-        <span>Melissa</span>
-      </a>
-      <a class="footer__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
-          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
-        </svg>
-        @love.melissa.xo
-      </a>
+    <div class="vine vine--footer" aria-hidden="true">
+      <span class="vine__stroke"></span>
+      <svg class="vine__leaf" viewBox="0 0 100 100" style="--rot:-58deg"><use href="#leaf" /></svg>
+      <svg class="vine__heart" viewBox="0 0 100 100"><use href="#heart" /></svg>
+      <svg class="vine__leaf" viewBox="0 0 100 100" style="--rot:58deg"><use href="#leaf" /></svg>
+      <span class="vine__stroke"></span>
     </div>
-    <p class="footer__copy">© <span id="year"></span> Melissa · Made with paint &amp; love</p>
+    <p class="footer__mark">Love, Melissa <span>xo</span></p>
+    <p class="footer__tag">human made art.</p>
+    <a class="footer__insta" href="https://www.instagram.com/love.melissa.xo/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" />
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+      </svg>
+      @love.melissa.xo
+    </a>
+    <p class="footer__copy">&copy; <span id="year"></span> Melissa &middot; every mark made by hand</p>
   </footer>
 
-  <!-- ============ LIGHTBOX ============ -->
+  <!-- ================= LIGHTBOX ================= -->
   <div id="lightbox" class="lightbox" hidden>
-    <button class="lightbox__close" aria-label="Close">×</button>
-    <button class="lightbox__nav lightbox__nav--prev" aria-label="Previous">‹</button>
+    <button class="lightbox__close" aria-label="Close">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" aria-label="Previous">&lsaquo;</button>
     <img class="lightbox__img" alt="" />
-    <button class="lightbox__nav lightbox__nav--next" aria-label="Next">›</button>
+    <button class="lightbox__nav lightbox__nav--next" aria-label="Next">&rsaquo;</button>
   </div>
 
   <script src="script.js"></script>
