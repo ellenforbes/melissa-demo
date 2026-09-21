@@ -155,12 +155,13 @@ const LAYOUTS = {
   ],
 };
 
-/* Flower colourways, cycled so each section head gets its own bloom. */
+/* Blooms cycled so each section heading gets its own, drawn by
+   Art/draw-flowers.py from Melissa's banner art. */
 const FLOWERS = [
-  { id: 'fl-daisy',  style: '--petal:#B0A622;--eye:#B32251;--pupil:#F1DBB2;--dot:#F1DBB2' },
-  { id: 'fl-cosmos', style: '--petal:#E67B22;--eye:#8A1739;--pupil:#F1DBB2' },
-  { id: 'fl-aster',  style: '--petal:#316378;--petal2:#B32251;--eye:#E67B22;--pupil:#B0A622' },
-  { id: 'fl-bloom',  style: '--petal:#B32251;--petal2:#E67B22;--eye:#316378;--pupil:#F1DBB2' },
+  'daisy-lime',
+  'cosmos-orange',
+  'flower-blue',
+  'dahlia-crimson',
 ];
 
 /* --------------------------------------------------------------------- */
@@ -254,7 +255,7 @@ const switcherMarkup = (section) => {
 
 const emptyMarkup = (flower) => `
       <div class="nothing-yet">
-        <svg viewBox="0 0 100 100" aria-hidden="true" style="${flower.style}"><use href="#${flower.id}" /></svg>
+        <img src="Art/blooms/${flower}.svg" alt="" aria-hidden="true" />
         <p>Photos of this work are on their way. In the meantime, drop me a note and I will
            happily talk you through it.</p>
         <a class="btn" href="#contact">Get in touch
@@ -280,7 +281,7 @@ const renderSection = (section, index) => {
       <header class="panel__head">
         <h2 class="display">${section.title}</h2>
         <div class="rule" aria-hidden="true">
-          <svg viewBox="0 0 100 100" style="${flower.style}"><use href="#${flower.id}" /></svg>
+          <img src="Art/blooms/${flower}.svg" alt="" />
         </div>
         <p class="panel__blurb">${section.blurb}</p>
       </header>
