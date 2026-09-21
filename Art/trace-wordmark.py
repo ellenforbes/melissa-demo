@@ -22,6 +22,55 @@ GROUPS = [
     ('xo',      '#E67B22', (0xE6, 0x7B, 0x22),  95, (0.76, 0.71, 0.88, 0.85)),
 ]
 MIN_AREA = 2000
+MIN_RING = 220        # px^2; anything smaller is texture, not a counter
+
+# The painting puts a heart with a small teardrop blob above it inside the
+# O of "Love", and a plain oval with a nub inside the o of "xo". Both should
+# read as two hearts, so after tracing, the counters of the letters named
+# here are thrown away and replaced with a pair. A point inside the letter
+# identifies it; the hearts are then fitted to the counter it already had,
+# so they land where the original hole was whatever the tracing does.
+HEART_COUNTERS = {
+    'love': (755, 620),     # the O
+    'xo': (1420, 950),      # the o
+}
+
+# one heart in a unit box, tip at bottom centre, as (command, points)
+HEART = [
+    ('M', [(0.50, 1.00)]),
+    ('C', [(0.14, 0.68), (0.00, 0.42), (0.13, 0.20)]),
+    ('C', [(0.26, 0.01), (0.45, 0.06), (0.50, 0.26)]),
+    ('C', [(0.55, 0.06), (0.74, 0.01), (0.87, 0.20)]),
+    ('C', [(1.00, 0.42), (0.86, 0.68), (0.50, 1.00)]),
+    ('Z', []),
+]
+
+HEART_ASPECT = 0.76        # width as a fraction of height; taller than wide
+HEART_GAP = 0.05           # space between the pair, as a fraction of the counter
+
+
+def heart_at(x, y, w, h):
+    """The unit heart scaled to w x h and moved to (x, y)."""
+    out = []
+    for cmd, pts in HEART:
+        out.append(cmd)
+        out.append(' '.join('%.1f %.1f' % (x + px * w, y + py * h) for px, py in pts))
+    return ''.join(out).replace('M ', 'M')
+
+
+def ring_area(pts):
+    a = 0.0
+    for i in range(len(pts)):
+        x0, y0 = pts[i]
+        x1, y1 = pts[(i + 1) % len(pts)]
+        a += x0 * y1 - x1 * y0
+    return abs(a) / 2
+
+
+def bbox(pts):
+    xs = [p[0] for p in pts]
+    ys = [p[1] for p in pts]
+    return min(xs), min(ys), max(xs), max(ys)
 
 
 # ------------------------------------------------------------- morphology --
@@ -44,6 +93,17 @@ def dilate(m, r=1):
 
 def close(m, r=2):
     return ~dilate(~dilate(m, r), r)
+
+
+def open_(m, r=2):
+    return dilate(~dilate(~m, r), r)
+
+
+def tidy(m):
+    """Fill the speckles the painting's texture leaves inside a letter, then
+       shave the nubs it leaves on the outside, so the outline that gets
+       traced is already smooth before any curve fitting happens."""
+    return open_(close(m, 3), 2)
 
 
 # --------------------------------------------------------------- components -
@@ -145,7 +205,7 @@ def simplify_ring(loop, eps):
 
 
 # -------------------------------------------------------------------- smooth
-def to_path(pts, corner_deg=62, tension=0.30):
+def to_path(pts, corner_deg=72, tension=0.32):
     """Catmull-Rom style cubics, with sharp vertices left sharp."""
     n = len(pts)
     P = [np.array(p, float) for p in pts]
@@ -187,7 +247,7 @@ H, W = arr.shape[:2]
 
 picked = []
 for name, hexcol, rgb, tol, (rx0, ry0, rx1, ry1) in GROUPS:
-    m = close(np.abs(arr - np.array(rgb, np.int16)).sum(axis=2) < tol, 2)
+    m = tidy(np.abs(arr - np.array(rgb, np.int16)).sum(axis=2) < tol)
     keep = []
     for (x0, y0, x1, y1), sub in components(m, MIN_AREA):
         cx, cy = (x0 + x1) / 2 / W, (y0 + y1) / 2 / H
@@ -208,11 +268,41 @@ print('viewBox', vb)
 parts = []
 for name, hexcol, keep in picked:
     ds = []
-    for _, sub in keep:
-        for loop in rings(sub):
-            pts = simplify_ring(loop, 1.4)
-            if len(pts) >= 3:
-                ds.append(to_path(pts))
+    swap = HEART_COUNTERS.get(name)
+    for (bx0, by0, bx1, by1), sub in keep:
+        loops = [simplify_ring(l, 2.4) for l in rings(sub)]
+        loops = [l for l in loops if len(l) >= 3 and ring_area(l) >= MIN_RING]
+        wants_hearts = swap and bx0 <= swap[0] <= bx1 and by0 <= swap[1] <= by1
+
+        if not wants_hearts:
+            ds.extend(to_path(l) for l in loops)
+            continue
+
+        # the biggest ring is the letter itself; the rest are its counter
+        loops.sort(key=ring_area, reverse=True)
+        outer, holes = loops[0], loops[1:]
+        ds.append(to_path(outer))
+        if not holes:
+            continue
+
+        boxes = [bbox(h) for h in holes]
+        hx0 = min(b[0] for b in boxes)
+        hy0 = min(b[1] for b in boxes)
+        hx1 = max(b[2] for b in boxes)
+        hy1 = max(b[3] for b in boxes)
+        w, h = hx1 - hx0, hy1 - hy0
+        cx = (hx0 + hx1) / 2
+
+        big_h = min(.60 * h, .98 * w / HEART_ASPECT)
+        small_h = big_h * .48
+        gap = HEART_GAP * h
+        # centre the pair in the counter rather than hanging it off the bottom
+        top = hy0 + (h - (small_h + gap + big_h)) / 2
+        for hy, hh in ((top, small_h), (top + small_h + gap, big_h)):
+            hw = hh * HEART_ASPECT
+            ds.append(heart_at(cx - hw / 2, hy, hw, hh))
+        print('   %s: counter -> two hearts, %d holes replaced' % (name, len(holes)))
+
     parts.append('  <path class="wm-%s" fill="%s" fill-rule="evenodd" d="%s" />'
                  % (name, hexcol, ''.join(ds)))
 
