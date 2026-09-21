@@ -631,12 +631,12 @@ ${data.email}
 Topic: ${data.topic}`;
 
     window.location.href =
-      `mailto:hello@lovemelissa.xo?subject=${encodeURIComponent(subject)}` +
+      `mailto:melissa.smigelski@hotmail.com?subject=${encodeURIComponent(subject)}` +
       `&body=${encodeURIComponent(body)}`;
 
     status.classList.add('is-ok');
     status.textContent =
-      'Opening your email app. If nothing happens, email hello@lovemelissa.xo directly.';
+      'Opening your email app. If nothing happens, email melissa.smigelski@hotmail.com directly.';
   });
 };
 
