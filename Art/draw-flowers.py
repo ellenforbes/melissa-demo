@@ -230,6 +230,28 @@ FLOWERS = {
 }
 
 
+# Simplified blooms for the places a flower is only 13-15px across - the
+# nav separators, the FAQ markers, the little one on the buttons. At that
+# size pencil veins and a ring of dots turn to mud, so these are six fat
+# lobes, a heavier outline and a single contrasting centre: the silhouette
+# and the middle are all that survive, so that is all they are made of.
+MINIS = {
+    'mini-orange':  (ORANGE,  ORANGE_LINE,  CREAM,   MAGENTA),
+    'mini-magenta': (MAGENTA, MAGENTA_LN,   PEACH,   BERRY),
+    'mini-lime':    (LIME,    LIME_LINE,    MAGENTA, CREAM),
+}
+
+for _n, (_fill, _line, _eye, _pip) in MINIS.items():
+    FLOWERS[_n] = dict(
+        seed=7,
+        stroke=4.0,
+        rings=[dict(count=6, r0=.24, r1=1.0, half=33, cap=.40, power=.42,
+                    fill=_fill, line=_line, veins=0, fan=0, vein=_line)],
+        centre=[('disc', .34, _eye, _line),
+                ('disc', .13, _pip, None)],
+    )
+
+
 def leaf_shape(rng):
     """A pointed oval leaf with a midrib and a few side veins."""
     pts = []
@@ -260,6 +282,7 @@ def to_vb(p, scale=46.0):
 def build(name, spec):
     """Everything the flower is made of, in viewBox coordinates."""
     rng = random.Random(spec['seed'])
+    sw = spec.get('stroke', 1.05)
     fills, lines, circles = [], [], []
 
     for ring in spec['rings']:
@@ -268,7 +291,7 @@ def build(name, spec):
             a = i * step
             pts = [to_vb(p) for p in petal(a, ring['r0'], ring['r1'],
                                            ring['half'], ring['cap'], ring['power'], rng)]
-            fills.append((pts, ring['fill'], ring['line']))
+            fills.append((pts, ring['fill'], ring['line'], sw))
             for v in range(ring['veins']):
                 off = (v - (ring['veins'] - 1) / 2) * ring['fan']
                 pv = [to_vb(p) for p in vein(a, ring['r0'] + .06, ring['r1'] * .9, off, rng)]
@@ -277,7 +300,7 @@ def build(name, spec):
     for item in spec['centre']:
         if item[0] == 'disc':
             _, r, fill, stroke = item
-            circles.append(('disc', 50, 50, r * 46, fill, stroke))
+            circles.append(('disc', 50, 50, r * 46, fill, stroke, sw))
         else:
             _, r, dr, count, cols = item
             for i in range(count):
@@ -286,28 +309,28 @@ def build(name, spec):
                                 50 + r * 46 * math.cos(th),
                                 50 + r * 46 * math.sin(th),
                                 dr * 46 * rng.uniform(.9, 1.1),
-                                cols[i % len(cols)], None))
+                                cols[i % len(cols)], None, sw))
     return fills, lines, circles
 
 
 def build_leaf():
     rng = random.Random(5)
     pts, veins = leaf_shape(rng)
-    fills = [([to_vb(p, 44) for p in pts], LEAF, LEAF_LINE)]
+    fills = [([to_vb(p, 44) for p in pts], LEAF, LEAF_LINE, 1.05)]
     lines = [([to_vb(p, 44) for p in v], LEAF_LINE) for v in veins]
     return fills, lines, []
 
 
 def write_svg(name, fills, lines, circles):
     out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">']
-    for pts, fill, line in fills:
-        out.append('<path fill="%s" stroke="%s" stroke-width="1.05" '
-                   'stroke-linejoin="round" d="%s"/>' % (fill, line, to_d(pts)))
+    for pts, fill, line, sw in fills:
+        out.append('<path fill="%s" stroke="%s" stroke-width="%.2f" '
+                   'stroke-linejoin="round" d="%s"/>' % (fill, line, sw, to_d(pts)))
     for pts, col in lines:
         out.append('<path fill="none" stroke="%s" stroke-width="0.62" '
                    'stroke-linecap="round" d="%s"/>' % (col, to_d(pts, closed=False)))
-    for _, cx, cy, r, fill, stroke in circles:
-        s = ' stroke="%s" stroke-width="1.05"' % stroke if stroke else ''
+    for _, cx, cy, r, fill, stroke, sw in circles:
+        s = ' stroke="%s" stroke-width="%.2f"' % (stroke, sw) if stroke else ''
         out.append('<circle cx="%.1f" cy="%.1f" r="%.2f" fill="%s"%s/>' % (cx, cy, r, fill, s))
     out.append('</svg>')
     svg = '\n'.join(out) + '\n'
@@ -326,15 +349,15 @@ def write_png(name, fills, lines, circles):
     def sc(pts):
         return [(x * k, y * k) for x, y in pts]
 
-    for pts, fill, line in fills:
+    for pts, fill, line, sw in fills:
         poly = sc(flatten(pts))
         d.polygon(poly, fill=fill)
-        d.line(poly + [poly[0]], fill=line, width=max(1, int(1.05 * k)), joint='curve')
+        d.line(poly + [poly[0]], fill=line, width=max(1, int(sw * k)), joint='curve')
     for pts, col in lines:
         d.line(sc(flatten(pts, closed=False)), fill=col, width=max(1, int(.62 * k)), joint='curve')
-    for _, cx, cy, r, fill, stroke in circles:
+    for _, cx, cy, r, fill, stroke, sw in circles:
         box = [(cx - r) * k, (cy - r) * k, (cx + r) * k, (cy + r) * k]
-        d.ellipse(box, fill=fill, outline=stroke, width=max(1, int(1.05 * k)) if stroke else 0)
+        d.ellipse(box, fill=fill, outline=stroke, width=max(1, int(sw * k)) if stroke else 0)
 
     img = img.resize((PNG_SIZE, PNG_SIZE), Image.LANCZOS)
     path = os.path.join(PNG_DIR, name + '.png')

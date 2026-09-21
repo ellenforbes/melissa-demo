@@ -34,8 +34,9 @@
   --radius:   22px;
   --shadow:   0 6px 0 rgba(74, 61, 30, .2);
 
-  /* the little flower that separates menu items */
-  --sep: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23E67B22'%3E%3Ccircle cx='50' cy='26' r='19'/%3E%3Ccircle cx='73' cy='43' r='19'/%3E%3Ccircle cx='64' cy='71' r='19'/%3E%3Ccircle cx='36' cy='71' r='19'/%3E%3Ccircle cx='27' cy='43' r='19'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='12' fill='%23F1DBB2'/%3E%3C/svg%3E");
+  /* the simplified blooms, for the places a flower is only ~13px across */
+  --sep: url("Art/blooms/mini-orange.svg");
+  --sep-faq: url("Art/blooms/mini-magenta.svg");
 
   /* the wavy stem either side of the heart divider */
   --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20' preserveAspectRatio='none'%3E%3Cpath d='M2 10C20 1 40 19 60 10S100 1 118 10' fill='none' stroke='%235E6B43' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -399,7 +400,7 @@ a { color: var(--pink); }
 .btn:hover { background: var(--berry); transform: translateY(-2px); }
 .btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(74, 61, 30, .34); }
 
-.btn__flower { width: 15px; height: 15px; flex: none; --petal: #E67B22; --eye: #F1DBB2; }
+.btn__flower { width: 16px; height: 16px; flex: none; }
 
 /* --- "what I make" cards ---------------------------------------------- */
 .makes {
@@ -730,7 +731,7 @@ a { color: var(--pink); }
   width: 14px;
   height: 14px;
   transform: translateY(-50%);
-  background: var(--sep) center / contain no-repeat;
+  background: var(--sep-faq) center / contain no-repeat;
   transition: transform .25s ease;
 }
 

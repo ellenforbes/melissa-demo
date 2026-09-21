@@ -259,7 +259,7 @@ const emptyMarkup = (flower) => `
         <p>Photos of this work are on their way. In the meantime, drop me a note and I will
            happily talk you through it.</p>
         <a class="btn" href="#contact">Get in touch
-          <svg class="btn__flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#fl-tiny" /></svg>
+          <img class="btn__flower" src="Art/blooms/mini-orange.svg" alt="" aria-hidden="true" />
         </a>
       </div>`;
 
