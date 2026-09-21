@@ -14,14 +14,12 @@
    layout  'a' 3 photos, 'b' 5 photos, 'c' 4 photos (see LAYOUTS below)
    photos  filenames inside `folder`; the FIRST one is the big feature
    --------------------------------------------------------------------- */
+/* Each section's heading and blurb live in index.html; what follows is
+   only the project data rendered underneath them. */
 const SECTIONS = [
   {
     id: 'giant-pbn',
     title: 'Giant Paint-by-Numbers',
-    blurb:
-      'A blank canvas, drawn and numbered by hand, colours mixed and labelled, ' +
-      'and then a whole room full of people filling it in. Weddings, birthdays, ' +
-      'fundraisers, festivals. Everyone gets a brush, nobody can get it wrong.',
     projects: [
       {
         title: 'Glasshouse Paint-by-Numbers',
@@ -44,9 +42,6 @@ const SECTIONS = [
   {
     id: 'faux-finishes',
     title: 'Faux Finishes',
-    blurb:
-      'Wood that is not wood, marble that never saw a quarry, metal with no metal in it. ' +
-      'Old decorative techniques, done properly, on walls, panels, furniture and sets.',
     projects: [
       {
         title: 'Fancy Painting',
@@ -69,9 +64,6 @@ const SECTIONS = [
   {
     id: 'scenic-art',
     title: 'Scenic Art',
-    blurb:
-      'Flats, backdrops, signage and whole painted towns for theatre and film. ' +
-      'Built big, painted fast, and made to read from the back row.',
     projects: [
       {
         title: 'Christmas Village Set',
@@ -109,9 +101,6 @@ const SECTIONS = [
   {
     id: 'other-mischief',
     title: 'Other Mischief',
-    blurb:
-      'Everything that does not fit in a tidy category. Furniture brought back from ' +
-      'the dead, props, costumes, signs, and whatever anyone asks for next.',
     projects: [
       {
         title: 'Wardrobe Refurbish',
@@ -265,29 +254,19 @@ const emptyMarkup = (flower) => `
 
 const renderSection = (section, index) => {
   const panel = $(`#panel-${section.id}`);
-  if (!panel) return;
+  const slot = panel && $('.projects', panel);
+  if (!slot) return;
 
-  const flower = FLOWERS[index % FLOWERS.length];
-  const body = section.projects.length
+  /* The heading and blurb are already in index.html so they are readable
+     without JavaScript and by search crawlers; only the projects below
+     them are built here. */
+  slot.innerHTML = section.projects.length
     ? `${switcherMarkup(section)}
       <div class="subpanels">${section.projects
         .map((p, i) => projectMarkup(section, p, i))
         .join('')}
       </div>`
-    : emptyMarkup(flower);
-
-  panel.innerHTML = `
-    <div class="slab">
-      <header class="panel__head">
-        <h2 class="display">${section.title}</h2>
-        <div class="rule" aria-hidden="true">
-          <img src="Art/blooms/${flower}.svg" alt="" />
-        </div>
-        <p class="panel__blurb">${section.blurb}</p>
-      </header>
-      <div class="projects">${body}
-      </div>
-    </div>`;
+    : emptyMarkup(FLOWERS[index % FLOWERS.length]);
 
   bindSwitcher(panel, section);
   bindSwipe(panel, section);
