@@ -37,13 +37,16 @@ HEART_COUNTERS = {
     'xo': (1420, 950),      # the o
 }
 
-# one heart in a unit box, tip at bottom centre, as (command, points)
+# One heart in a unit box, tip at bottom centre-right. It leans: the left
+# side swells and sweeps low, the lobes are uneven, and the tip swings out
+# to the right, which is what gives it the groove. Symmetric reads flat
+# next to lettering this bouncy.
 HEART = [
-    ('M', [(0.50, 1.00)]),
-    ('C', [(0.14, 0.68), (0.00, 0.42), (0.13, 0.20)]),
-    ('C', [(0.26, 0.01), (0.45, 0.06), (0.50, 0.26)]),
-    ('C', [(0.55, 0.06), (0.74, 0.01), (0.87, 0.20)]),
-    ('C', [(1.00, 0.42), (0.86, 0.68), (0.50, 1.00)]),
+    ('M', [(0.80, 0.98)]),
+    ('C', [(0.46, 0.84), (0.02, 0.62), (0.02, 0.36)]),
+    ('C', [(0.02, 0.10), (0.30, 0.02), (0.44, 0.30)]),
+    ('C', [(0.52, 0.06), (0.84, 0.04), (0.94, 0.28)]),
+    ('C', [(1.00, 0.48), (0.94, 0.74), (0.80, 0.98)]),
     ('Z', []),
 ]
 

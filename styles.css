@@ -167,9 +167,28 @@ a { color: var(--pink); }
 .masthead.is-compact .vine,
 .masthead.is-compact .tagline { display: none; }
 
+/* On the work tabs the flower border gets a little taller and the menu
+   floats over it, rather than sitting on a strip of bare paper beneath.
+   A cream ring plus a drop shadow lifts the bar off a busy background. */
 .masthead.is-compact .garland {
-  max-height: clamp(62px, 8vw, 104px);
+  /* no bleed off the top here - the whole band is wanted, so the bar has
+     flowers above it as well as below */
+  margin-top: 0;
+  max-height: clamp(92px, 12vw, 148px);
   margin-bottom: 0;
+}
+
+.masthead.is-compact { padding-bottom: clamp(.7rem, 1.6vw, 1.1rem); }
+
+.masthead.is-compact .menubar {
+  position: relative;
+  z-index: 3;
+  margin-top: calc(-1 * clamp(56px, 7.4vw, 92px));
+}
+
+.masthead.is-compact .menubar__list,
+.masthead.is-compact .menubar__toggle {
+  box-shadow: 0 0 0 3px var(--cream), 0 8px 18px rgba(58, 14, 34, .42);
 }
 
 /* --- leafy heart divider ---------------------------------------------- */
